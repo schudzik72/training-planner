@@ -1,0 +1,21 @@
+$font-stack: 'Roboto', sans-serif;
+$selected-button-color: #03a9f4;
+
+html, body {
+	font-family: $font-stack;
+	font-size:14px;
+  	margin: 0px;
+  	padding: 0px;
+  	height:100%;
+}
+
+md-list-item > a {
+	width: 100%;
+	text-align: center !important;
+}
+
+md-list {
+	.md-button.selected {
+		color: $selected-button-color;
+	}
+}

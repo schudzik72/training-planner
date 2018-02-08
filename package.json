@@ -1,0 +1,27 @@
+{
+  "dev": "npm-run-all -p sass:* js:* html:*",
+  "scripts": {
+    "build-task:scss-compile": "node-sass-chokidar --source-map true scss/ -o dist/css",
+    "build-task:autoprefixer": "postcss dist/css/*.css --use autoprefixer -d dist/css",
+    "sass:build": "npm-run-all -p build-task:*",
+    "sass:watch": "chokidar 'scss/**/*.scss' -c 'npm run sass:build'",
+    "dev": "npm-run-all -p sass:*",
+    "start": "http-server -c-1"
+  },
+  "dependencies": {
+    "@uirouter/angularjs": "^1.0.14",
+    "@uirouter/core": "^5.0.16",
+    "angular": "^1.6.9",
+    "angular-animate": "^1.6.9",
+    "angular-aria": "^1.6.9",
+    "angular-material": "^1.1.6",
+    "angular-messages": "^1.6.9",
+    "autoprefixer": "^7.2.5",
+    "chokidar-cli": "^1.2.0",
+    "jquery": "3.3.1",
+    "node-sass-chokidar": "0.0.3",
+    "npm-run-all": "^4.1.2",
+    "postcss-cli": "^5.0.0",
+    "toastr": "^2.1.4"
+  }
+}

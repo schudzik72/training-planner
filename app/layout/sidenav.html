@@ -1,0 +1,10 @@
+<link rel="stylesheet" href="dist/css/sidenav.css">
+<md-sidenav md-is-locked-open="true" class="md-whiteframe-4dp">
+	<md-list>
+		<md-list-item ng-repeat="route in vm.navRoutes" ng-class="vm.isCurrent(route)">
+			<md-button ui-sref="{{ route.name }}">
+				{{ route.settings.content }}
+			</md-button>
+		</md-list-item>
+	</md-list>
+</md-sidenav>
