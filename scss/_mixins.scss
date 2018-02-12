@@ -1,0 +1,34 @@
+@mixin border($size, $type, $color) {
+	-webkit-border: $size $type $color;
+	   -moz-border: $size $type $color;
+	    -ms-border: $size $type $color;
+			border: $size $type $color;
+}
+
+@mixin border-radius($radius) {
+	-webkit-border-radius: $radius;
+	   -moz-border-radius: $radius;
+	    -ms-border-radius: $radius;
+	        border-radius: $radius;
+}
+
+@mixin transition($property, $duration, $timingFunction) {
+	-webkit-transition: $property $duration $timingFunction;
+	   -moz-transition: $property $duration $timingFunction;
+	    -ms-transition: $property $duration $timingFunction;
+	        transition: $property $duration $timingFunction;
+}
+
+@mixin animation-duration($duration) {
+	-webkit-transition: $duration;
+	   -moz-transition: $duration;
+	    -ms-transition: $duration;
+	        transition: $duration;
+}
+
+@mixin animation-name($name) {
+	-webkit-animation-name: $name;
+	   -moz-animation-name: $name;
+	    -ms-animation-name: $name;
+	        animation-name: $name;
+}

@@ -5,8 +5,13 @@
 		.module('trainingPlanner.layout')
 		.controller('ContentController', ContentController);
 
-	function ContentController() {
+	ContentController.$inject = ['$mdSidenav'];
 
+	function ContentController($mdSidenav) {
+		let vm = this;
+		vm.toggleSidenav = function() {
+			$mdSidenav('sidenav').toggle();
+		};
 	}
 	
 })();

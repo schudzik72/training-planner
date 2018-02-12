@@ -1,8 +1,29 @@
+@import 'mixins';
 md-sidenav {
 	height: 100vh;
 
-	md-list {
-		padding: 0;
+	header {
+		height: 34vh;
+	}
+
+	nav {
+		md-list {
+			padding: 0;
+			height: 56vh;
+		}
+	}
+
+	footer {
+		font-style: italic;
+		height: 10vh;
 	}
 	
+}
+
+md-sidenav.ng-enter {
+	@include animation-name(slideInLeft);
+}
+
+md-sidenav.ng-hide {
+	@include animation-name(slideOutLeft)
 }

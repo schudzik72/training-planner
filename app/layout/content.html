@@ -1,4 +1,8 @@
 <link rel="stylesheet" href="dist/css/content.css">
-<md-content flex id="content">
-	<ui-view></ui-view>
+<md-button id="sidenav-toggle-button" class="md-icon-button" aria-label="Sidenav" hide-gt-sm ng-click="vm.toggleSidenav()">
+	<md-icon class="fa fa-bars"></md-icon>
+</md-button>
+<md-content layout="column" layout-fill id="content">
+	<h2 class="md-display-1">{{vm.test}}</h2>
+	<div ui-view class="animated"></div>
 </md-content>

@@ -6,7 +6,7 @@
     "sass:build": "npm-run-all -p build-task:*",
     "sass:watch": "chokidar 'scss/**/*.scss' -c 'npm run sass:build'",
     "dev": "npm-run-all -p sass:*",
-    "start": "http-server -c-1"
+    "live": "live-server --port=8000 --no-browser"
   },
   "dependencies": {
     "@uirouter/angularjs": "^1.0.14",
@@ -16,9 +16,12 @@
     "angular-aria": "^1.6.9",
     "angular-material": "^1.1.6",
     "angular-messages": "^1.6.9",
+    "animate.css": "^3.6.1",
     "autoprefixer": "^7.2.5",
     "chokidar-cli": "^1.2.0",
+    "font-awesome": "^4.7.0",
     "jquery": "3.3.1",
+    "live-server": "^1.2.0",
     "node-sass-chokidar": "0.0.3",
     "npm-run-all": "^4.1.2",
     "postcss-cli": "^5.0.0",
