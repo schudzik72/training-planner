@@ -4,7 +4,7 @@
 		md-list {
 			@include border(2px, solid, black);
 			@include border-radius(20px);
-			.fa.fa-user-circle {
+			img.md-avatar {
 				padding: 10px;
 				font-size: 40px;
 			}

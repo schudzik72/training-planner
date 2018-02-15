@@ -8,6 +8,11 @@
 	function SummaryController() {
 		let vm = this;
 		vm.title = 'Summary';
+		vm.typesOfWorkout = [
+			'Strength',
+			'Mass',
+			'Endurance',
+		];
 	}
 
 })();

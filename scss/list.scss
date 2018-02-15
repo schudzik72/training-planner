@@ -1,0 +1,7 @@
+@import 'mixins';
+.workout-list-container {
+	.workout-list {
+		@include border(2px, solid, black);
+		@include border-radius(20px);
+	}
+}

@@ -20,10 +20,10 @@
 					templateUrl: 'app/list/list.html',
 					controller: 'ListController',
 					controllerAs: 'vm',
-					title: 'Workout List',
+					title: 'Workouts',
 					settings: {
 						nav: 2,
-						content: 'Workout List'
+						content: 'Workouts'
 					}
 				}
 			}
