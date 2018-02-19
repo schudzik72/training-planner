@@ -9,10 +9,15 @@
 			<div layout-gt-xs="row">
 				<md-input-container>
 					<label>Workout Name</label>
-					<input name="name" required ng-model="vm.workout.name">
+					<input name="name" required ng-model="vm.workout.name" autocomplete="off">
 					<div ng-messages="workoutForm.name.$error">
      	 				<div ng-message="required">This is required.</div>
      	 			</div>
+				</md-input-container>
+
+				<md-input-container>
+					<label>Description</label>
+					<input name="description" ng-model="vm.workout.description" autocomplete="off">
 				</md-input-container>
 
 				<md-input-container class="md-block" flex-gt-sm>

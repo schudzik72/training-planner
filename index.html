@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="trainingPlanner">
 <head>
-
 	<style>
 	
 		.ng-hide {
@@ -25,7 +24,7 @@
 
 
 </head>
-<body ng-cloak ng-app="trainingPlanner" layout="column">
+<body ng-cloak layout="column">
 
 <shell></shell>
 
@@ -38,6 +37,8 @@
 <script src="node_modules/@uirouter/angularjs/release/angular-ui-router.js"></script>
 <script src="node_modules/jquery/dist/jquery.js"></script>
 <script src="node_modules/toastr/toastr.js"></script>
+<script src="node_modules/chart.js/dist/Chart.min.js"></script>
+<script src="node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
 <!-- Modules -->
 <script src="app/app.module.js"></script>
 <script src="app/core/core.module.js"></script>
@@ -46,7 +47,7 @@
 <script src="app/blocks/router/router.module.js"></script>
 <script src="app/layout/layout.module.js"></script>
 <script src="app/summary/summary.module.js"></script>
-<script src="app/list/list.module.js"></script>
+<script src="app/workout/workout.module.js"></script>
 <!-- Core module -->
 <script src="app/core/config.js"></script>
 <script src="app/core/constants.js"></script>
@@ -65,13 +66,17 @@
 <!-- Summary module -->
 <script src="app/summary/summary.controller.js"></script>
 <script src="app/summary/summary.route.js"></script>
-<!-- List module -->
-<script src="app/list/list.component.js"></script>
-<script src="app/list/list.controller.js"></script>
-<script src="app/list/list.route.js"></script>
-<script src="app/list/list-item.component.js"></script>
-<script src="app/list/list-item.controller.js"></script>
-<script src="app/list/add-workout-form.controller.js"></script>
+<!-- Workout module -->
+<script src="app/workout/workout.route.js"></script>
+<script src="app/workout/workout.list.controller.js"></script>
+<script src="app/workout/add-workout-form.controller.js"></script>
+<script src="app/workout/workout.detail.controller.js"></script>
+<script src="app/workout/workout.edit.controller.js"></script>
+<script src="app/workout/exercise.js"></script>
+<script src="app/workout/parameter.js"></script>
+<script src="app/workout/type.js"></script>
+<script src="app/workout/workout.js"></script>
+<script src="app/workout/workout.service.js"></script>
 
 </body>
 </html>

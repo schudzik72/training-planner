@@ -6,6 +6,6 @@
 			'app.core',
 			'trainingPlanner.layout',
 			'trainingPlanner.summary',
-			'trainingPlanner.list',
+			'trainingPlanner.workout',
 		]);
 })();

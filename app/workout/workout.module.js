@@ -2,7 +2,7 @@
 	'use strict';
 
 	angular
-		.module('trainingPlanner.list', [
+		.module('trainingPlanner.workout', [
 			'app.core'
 		]);
 }))();

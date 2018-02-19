@@ -8,6 +8,7 @@
 			'ngAria',
 			'ngMaterial',
 			'ui.router',
+			'chart.js',
 			'blocks.logger',
 			'blocks.exception',
 			'blocks.router'
