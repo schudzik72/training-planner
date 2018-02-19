@@ -5,16 +5,14 @@
 		.module('trainingPlanner.workout')
 		.controller('WorkoutDetailController', WorkoutDetailController);
 
-	WorkoutDetailController.$inject = ['logger', '$stateParams', 'workoutService', '$timeout'];
+	WorkoutDetailController.$inject = ['logger', '$stateParams', 'workoutService', '$timeout', '$mdDialog'];
 
-	function WorkoutDetailController(logger, $stateParams, workoutService, $timeout) {
+	function WorkoutDetailController(logger, $stateParams, workoutService, $timeout, $mdDialog) {
 		let vm = this;
 
 		init();
 
 		function init() {
-			vm.isFabToolbarOpen = false;
-			vm.loaded = false;
 			workoutService.getWorkout($stateParams.id)
 				.then((response) => {
 					vm.workout = response;
@@ -48,8 +46,38 @@
 					}
 					console.log(chartLabels);
 					console.log(chartData);
-					vm.loaded = true;
 				});
+
+			vm.showAddExerciseForm = function(event) {
+				$mdDialog.show({
+					controller: 'AddExerciseFormController',
+					controllerAs: 'vm',
+					bindToController: true,
+					templateUrl: 'app/workout/add-exercise-form.html',
+					parent: angular.element(document.body),
+					targetEvent: event,
+					clickOutsideToClose: true,
+					fullscreen: vm.customFullscreen // Only for -xs, -sm breakpoints.
+			    })
+			    .then(function(exercise) {
+			    	workoutService.insertExercise(
+			    		new Exercise(
+			    			vm.workout.exercises.length + 1,
+			    			exercise.name, 
+			    			exercise.description, 
+			    			exercise.type, 
+			    			exercise.bodyPartsEngaged)
+			    		).then(exercises => vm.workout.exercises = exercises)
+			    		.then(() => logger.success('New exercise added', vm.exercise));
+			    }, function() {
+			    	logger.info('Cancelled', null);
+			    });
+			};
+
+			vm.removeExercise = function(id) {
+				vm.workout.exercises.splice(id, 1);
+				logger.success('Removed exercise', vm.workout.exercises);
+			};
 		}
 	}
 })();

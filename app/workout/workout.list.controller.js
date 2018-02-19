@@ -28,7 +28,7 @@
 					templateUrl: 'app/workout/add-workout-form.html',
 					parent: angular.element(document.body),
 					targetEvent: event,
-					clickOutsideToClose:true,
+					clickOutsideToClose: true,
 					fullscreen: vm.customFullscreen // Only for -xs, -sm breakpoints.
 			    })
 			    .then(function(workout) {

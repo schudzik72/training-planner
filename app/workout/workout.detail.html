@@ -1,7 +1,4 @@
-<span layout="row" layout-fill layout-align="center center" ng-if="!vm.loaded">
-	<md-progress-circular md-mode="indeterminate" ></md-progress-circular>
-</span>
-<span ng-if="vm.loaded" class="workout-detail-container">
+<span class="workout-detail-container">
 	<md-button class="md-fab md-fab-top-right" aria-label="Return" ui-sref="workout.list">
 		<md-icon md-svg-icon="img/icons/arrow-left.svg"></md-icon>
 	</md-button>
@@ -33,11 +30,25 @@
 		<md-content>
 			<md-list flex>
 				<md-subheader class="md-no-sticky">Exercises</md-subheader>
-				<md-list-item class="md-3-line" ng-repeat="exercise in vm.workout.exercises" ng-click="null">
-					<div class="md-list-item-text" layout="column">
+				<md-list-item class="md-3-line" ng-repeat="exercise in vm.workout.exercises" ng-click="showModifyOptions = !showModifyOptions">
+					<div class="md-list-item-text" layout="column" ng-show="!showModifyOptions">
 						<h3>{{ exercise.name }}</h3>
 						<h4>{{ exercise.description }}</h4>
-						<p>Engaged Body Parts</p>
+						<p>Engaged Body Parts: {{ exercise.getEngagedBodyPartsToString() | uppercase }}</p>
+					</div>
+					<div class="md-list-item-text" layout="row" layout-align="center center" ng-show="showModifyOptions">
+						<md-button ng-click="vm.editExercise($index)">
+							<md-icon md-svg-icon="img/icons/pencil.svg"></md-icon>
+						</md-button>
+						<md-button ng-click="vm.removeExercise($index)">
+							<md-icon md-svg-icon="img/icons/delete.svg"></md-icon>
+						</md-button>
+					</div>
+				</md-list-item>
+				<md-list-item class="md-2-line" ng-click="vm.showAddExerciseForm();">
+					<div class="md-list-item-text" layout="column" layout-align="center center">
+						<p class="md-caption">Add new exercise</p>
+						<md-icon md-svg-icon="img/icons/plus-circle-outline.svg"></md-icon>
 					</div>
 				</md-list-item>
 				<md-divider ng-if="$index != $last"></md-divider>

@@ -20,4 +20,8 @@ class Exercise {
 		this.bodyPartsEngaged = bodyPartsEngaged;
 		this.imgOrGifPath = imgOrGifPath;
 	}
+
+	getEngagedBodyPartsToString() {
+		return this.bodyPartsEngaged.join(', ');
+	}
 }

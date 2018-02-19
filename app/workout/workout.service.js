@@ -31,7 +31,9 @@
 		new Type('2', 'Performance', performanceWorkoutTypeParameters),
 	];
 
-	let exerciseTypes = ['PUSH', 'PULL', 'N/A'];
+	let exerciseTypes = ['PUSH', 'PULL', 'BREAK', 'N/A'];
+
+	let bodyParts = ['ABS', 'CHEST', 'UPPER BACK', 'LOWER BACK', 'SHOULDERS', 'BICEPS', 'TRICEPS'];
 
 	let exercises = [
 		new Exercise('0', 'Chest Press', 'Chest Press Description', exerciseTypes[0], ['chest'])
@@ -46,8 +48,13 @@
 		let service = {
 			getWorkout: getWorkout,
 			getWorkouts: getWorkouts,
+			insertWorkout: insertWorkout,
+			removeWorkout: removeWorkout,
 			getWorkoutTypes: getWorkoutTypes,
-			getExercises: getExercises
+			getExerciseTypes: getExerciseTypes,
+			getExercises: getExercises,
+			insertExercise: insertExercise,
+			getBodyParts: getBodyParts,
 		};
 
 		return service;
@@ -94,6 +101,19 @@
 		function getExercises() {
 			let deferred = $q.defer();
 			deferred.resolve(exercises);
+			return deferred.promise;
+		}
+
+		function insertExercise(exercise) {
+			let deferred = $q.defer();
+			exercises.push(exercise);
+			deferred.resolve(exercises);
+			return deferred.promise;
+		}
+
+		function getBodyParts() {
+			let deferred = $q.defer();
+			deferred.resolve(bodyParts);
 			return deferred.promise;
 		}
 	}

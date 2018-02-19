@@ -11,6 +11,7 @@
 	}
 	md-content {
 		#workout-type-parameters-container {
+			margin-right: 40px;
 			.workout-type-parameters {
 				margin: 5px;
 				padding: 0 10px;
@@ -26,6 +27,9 @@
 					font-weight: 500;
 				}
 			}
+		}
+		canvas {
+			padding-right: 40px;
 		}
 	}
 }

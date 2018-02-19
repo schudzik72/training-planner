@@ -8,7 +8,7 @@
 
 #content {
 	margin-left: 5px;
-	padding: 5px 40px 0 40px;
+	padding: 5px 0 0 40px;
 	overflow: hidden;
 	height: 97vh;
 	overflow-y: scroll;
@@ -27,6 +27,6 @@
 	}
 }
 
-md-progress-circular {
-
+md-list {
+	margin-right: 40px;
 }

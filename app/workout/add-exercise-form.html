@@ -1,15 +1,15 @@
-<link rel="stylesheet" href="dist/css/add-workout-form.css">
-<md-content class="add-workout-form-container md-inline-form" layout="column">
+<link rel="stylesheet" href="dist/css/add-exercise-form.css">
+<md-content class="add-exercise-form-container md-inline-form" layout="column">
 	<header>
-		<h1 class="md-display-1">Add new workout</h1>
+		<h1 class="md-display-1">Add new exercise</h1>
 	</header>
 	<md-content layout-padding>
     <div>
 		<form name="form">
 			<div layout-gt-xs="row">
 				<md-input-container>
-					<label>Workout Name</label>
-					<input name="name" required ng-model="vm.workout.name" autocomplete="off">
+					<label>Exercise Name</label>
+					<input name="name" required ng-model="vm.exercise.name" autocomplete="off">
 					<div ng-messages="form.name.$error">
      	 				<div ng-message="required">This is required.</div>
      	 			</div>
@@ -17,9 +17,9 @@
 
 				<md-input-container class="md-block" flex-gt-sm>
 					<label>Type</label>
-					<md-select ng-model="vm.workout.type" name="type" required>
+					<md-select ng-model="vm.exercise.type" name="type" required>
 						<md-option ng-repeat="type in vm.types" ng-value="type">
-							{{ type.name }}	
+							{{ type }}	
 						</md-option>
 					</md-select>
 					<div ng-messages="form.type.$error">
@@ -30,7 +30,7 @@
 			<div layout-gt-xs="row">
 				<md-input-container flex>
 					<label>Description</label>
-					<textarea name="description" ng-model="vm.workout.description" md-maxlength="150"></textarea>
+					<textarea name="description" ng-model="vm.exercise.description" md-maxlength="150"></textarea>
 					<div ng-messages="form.description.$error">
 						<div ng-message="md-maxlength">
 							That's too long
@@ -38,6 +38,23 @@
 					</div>
 				</md-input-container>
 			</div>
+			<div layout-gt-xs="row">
+				<md-input-container flex>
+					<label>Body parts engaged</label>
+					<md-select ng-model="vm.exercise.bodyPartsEngaged" name="type" required multiple>
+						<md-option ng-repeat="bodyPart in vm.bodyParts" ng-value="bodyPart">
+							{{ bodyPart }}	
+						</md-option>
+					</md-select>
+					<div ng-messages="form.type.$error">
+						<div ng-message="required">
+							This is required.
+						</div>
+					</div>
+				</md-input-container>
+			</div>
+
+
 			<div layout-gt-xs="row" layout-align="end center">
 				<div>
 					<md-button ng-click="vm.add(form)">Add</md-button>
