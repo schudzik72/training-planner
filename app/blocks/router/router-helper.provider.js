@@ -17,7 +17,7 @@
 			window.location.hash = '/';
 		}
 
-		$locationProvider.html5Mode(true);
+		$locationProvider.html5Mode(false);
 
 		this.configure = function(cfg) {
 			angular.extend(config, cfg);
