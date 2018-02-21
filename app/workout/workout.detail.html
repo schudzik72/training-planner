@@ -30,14 +30,17 @@
 		<md-content>
 			<md-list flex>
 				<md-subheader class="md-no-sticky">Exercises</md-subheader>
-				<md-list-item class="md-3-line" ng-repeat="exercise in vm.workout.exercises" ng-click="showModifyOptions = !showModifyOptions">
-					<div class="md-list-item-text" layout="column" ng-show="!showModifyOptions">
+				<md-list-item class="md-3-line" ng-repeat="exercise in vm.workout.exercises" ng-click="showOptions = !showOptions">
+					<div class="md-list-item-text" layout="column" ng-show="!showOptions">
 						<h3>{{ exercise.name }}</h3>
 						<h4>{{ exercise.description }}</h4>
 						<p>Engaged Body Parts: {{ exercise.getEngagedBodyPartsToString() | uppercase }}</p>
 					</div>
-					<div class="md-list-item-text" layout="row" layout-align="center center" ng-show="showModifyOptions">
-						<md-button ng-click="vm.editExercise($index)">
+					<div class="md-list-item-text" layout="row" layout-align="center center" ng-show="showOptions">
+						<md-button ng-if="exercise.linkToExercise" ng-href="{{exercise.linkToExercise}}" target="_blank">
+							<md-icon md-svg-icon="img/icons/file-document-box.svg"></md-icon>
+						</md-button>
+						<md-button ng-click="vm.showEditExerciseForm($event, $index)">
 							<md-icon md-svg-icon="img/icons/pencil.svg"></md-icon>
 						</md-button>
 						<md-button ng-click="vm.removeExercise($index)">
@@ -45,7 +48,7 @@
 						</md-button>
 					</div>
 				</md-list-item>
-				<md-list-item class="md-2-line" ng-click="vm.showAddExerciseForm();">
+				<md-list-item class="md-2-line" ng-click="vm.showAddExerciseForm($event);">
 					<div class="md-list-item-text" layout="column" layout-align="center center">
 						<p class="md-caption">Add new exercise</p>
 						<md-icon md-svg-icon="img/icons/plus-circle-outline.svg"></md-icon>

@@ -3,27 +3,30 @@
 
 	angular
 		.module('trainingPlanner.workout')
-		.controller('AddExerciseFormController', AddExerciseFormController);
+		.controller('ExerciseFormController', ExerciseFormController);
 
-	AddExerciseFormController.$inject = ['logger', 'workoutService', '$mdDialog'];
+	ExerciseFormController.$inject = ['logger', 'workoutService', '$mdDialog'];
 
-	function AddExerciseFormController(logger, workoutService, $mdDialog) {
+	function ExerciseFormController(logger, workoutService, $mdDialog, exercise) {
 		let vm = this;
 
 		init();
 
 		function init() {
-			vm.exercise = {
-				name: '',
-				type: '',
-				bodyPartsEngaged: []
-			};
+			vm.isEdit = exercise !== undefined;
+			vm.exercise = vm.isEdit === undefined ? 
+				{
+					name: '',
+					type: '',
+					bodyPartsEngaged: []
+				} :
+				exercise;
 			workoutService.getExerciseTypes()
 				.then(types => vm.types = types)
 				.then(() => workoutService.getBodyParts())
 				.then(bodyParts => vm.bodyParts = bodyParts);
 
-			vm.add = function(form) {
+			vm.upsert = function(form) {
 				if(form.$valid) {
 					$mdDialog.hide(vm.exercise);
 				} else {

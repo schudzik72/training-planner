@@ -33,7 +33,7 @@
 					<textarea name="description" ng-model="vm.exercise.description" md-maxlength="150"></textarea>
 					<div ng-messages="form.description.$error">
 						<div ng-message="md-maxlength">
-							That's too long
+							That's too long.
 						</div>
 					</div>
 				</md-input-container>
@@ -53,11 +53,23 @@
 					</div>
 				</md-input-container>
 			</div>
-
-
+			<div layout-gt-xs="row">
+				<md-input-container flex>
+					<label>Link to exercise</label>
+					<input name="linkToExercise" ng-model="vm.exercise.linkToExercise" autocomplete="off" ng-pattern="/^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/">
+					<div ng-messages="form.linkToExercise.$error">
+						<div ng-message="pattern">
+							Url is not valid.
+						</div>
+					</div>
+				</md-input-container>
+			</div>
 			<div layout-gt-xs="row" layout-align="end center">
 				<div>
-					<md-button ng-click="vm.add(form)">Add</md-button>
+					<md-button aria-label="{{vm.isEdit ? 'Update' : 'Add'}}" ng-click="vm.upsert(form)">
+						<span ng-if="vm.isEdit">Update</span>
+						<span ng-if="!vm.isEdit">Add</span>
+					</md-button>
 				</div>
 			</div>
 		</form>
