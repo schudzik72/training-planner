@@ -3,11 +3,11 @@
 
 	angular
 		.module('trainingPlanner.workout')
-		.controller('AddWorkoutFormController', AddWorkoutFormController);
+		.controller('WorkoutFormController', WorkoutFormController);
 
-	AddWorkoutFormController.$inject = ['logger', '$mdDialog', 'workoutService'];
+	WorkoutFormController.$inject = ['logger', '$mdDialog', 'workoutService'];
 
-	function AddWorkoutFormController(logger, $mdDialog, workoutService) {
+	function WorkoutFormController(logger, $mdDialog, workoutService) {
 		let vm = this;
 
 		workoutService.getWorkoutTypes()

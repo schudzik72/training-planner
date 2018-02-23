@@ -22,10 +22,10 @@
 			
 			vm.showAddWorkoutForm = function(event) {
 				$mdDialog.show({
-					controller: 'AddWorkoutFormController',
+					controller: 'WorkoutFormController',
 					controllerAs: 'vm',
 					bindToController: true,
-					templateUrl: 'app/workout/add-workout-form.html',
+					templateUrl: 'app/workout/workout.form.html',
 					parent: angular.element(document.body),
 					targetEvent: event,
 					clickOutsideToClose: true,

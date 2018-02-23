@@ -58,7 +58,7 @@
 					controller: 'ExerciseFormController',
 					controllerAs: 'vm',
 					bindToController: true,
-					templateUrl: 'app/workout/exercise-form.html',
+					templateUrl: 'app/workout/exercise.form.html',
 					parent: angular.element(document.body),
 					targetEvent: event,
 					clickOutsideToClose: true,
