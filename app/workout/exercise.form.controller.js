@@ -33,7 +33,7 @@
 					logger.info(typeof vm.exercise.linkToExercise);
 					let startingUrl = "http://";
     				let httpsStartingUrl = "https://";
-					if(!(vm.exercise.linkToExercise.startsWith(startingUrl) || vm.exercise.linkToExercise.startsWith(httpsStartingUrl))) {
+					if(vm.exercise.linkToExercise && !(vm.exercise.linkToExercise.startsWith(startingUrl) || vm.exercise.linkToExercise.startsWith(httpsStartingUrl))) {
 						vm.exercise.linkToExercise = startingUrl + vm.exercise.linkToExercise;
 					}
 					$mdDialog.hide(vm.exercise);
