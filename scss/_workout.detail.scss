@@ -28,8 +28,8 @@
 				}
 			}
 		}
-		canvas {
-			padding-right: 40px;
+		md-content.exercise-list {
+			overflow: unset !important;
 		}
 	}
 }
