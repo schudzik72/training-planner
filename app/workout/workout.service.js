@@ -33,7 +33,7 @@
 
 	let exerciseTypes = ['PUSH', 'PULL', 'BREAK', 'N/A'];
 
-	let bodyParts = ['ABS', 'CHEST', 'UPPER BACK', 'LOWER BACK', 'SHOULDERS', 'BICEPS', 'TRICEPS'];
+	let bodyParts = ['ABS', 'CHEST', 'UPPER BACK', 'LOWER BACK', 'SHOULDERS', 'BICEPS', 'TRICEPS', 'LEGS'];
 
 	let workouts = [
 		new Workout('0', 'Mass Training Phase 1', 'Phase 1 mass training', angular.copy(workoutTypes[0]), new Array()),

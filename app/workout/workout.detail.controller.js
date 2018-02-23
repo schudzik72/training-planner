@@ -21,36 +21,31 @@
 
 			function calculateChartValues() {
 				vm.chart = {
-					labels: [
-						'Abs', 
-						'Chest', 
-						'Upper Back', 
-						'Lower Back', 
-						'Shoulders', 
-						'Biceps', 
-						'Triceps'
-					],
+					labels: [],
 					data: [
-						[65, 59, 90, 81, 56, 55, 40]
+						[]
 					]
 				};
-				// TODO
 				let chartLabels = new Set();
 				let chartData = new Map();
 				if(vm.workout.exercises) {
 					vm.workout.exercises.forEach((exercise) => {
-						let exerciseName = exercise.name;
-						chartLabels.add(exerciseName);
-						if(!chartData.has(exerciseName)) {
-							chartData.set(exerciseName, 1);
-						} else {
-							let counter = chartData.get(exerciseName);
-							chartData.set(exerciseName, counter + 1);
-						}
+						exercise.bodyPartsEngaged.forEach(bodyPart => {
+							chartLabels.add(bodyPart);
+							if(!chartData.has(bodyPart)) {
+								chartData.set(bodyPart, 1);
+							} else {
+								let counter = chartData.get(bodyPart);
+								chartData.set(bodyPart, counter + 1);
+							}
+						});
 					});
 				}
-				console.log(chartLabels);
-				console.log(chartData);
+				
+				for(const entry of chartData.entries()) {
+					vm.chart.labels.push(entry[0]);
+					vm.chart.data[0].push(entry[1]);
+				}
 			}
 
 			vm.showAddExerciseForm = function(event) {
@@ -84,7 +79,6 @@
 			};
 
 			vm.showEditExerciseForm = function(event, editedExercise) {
-				logger.info('TODO Editing', editedExercise);
 				$mdDialog
 					.show({
 						controller: 'ExerciseFormController',
@@ -100,7 +94,7 @@
 						fullscreen: vm.customFullscreen // Only for -xs, -sm breakpoints.
 				    })
 				    .then(function(exercise) {
-				    	logger.info('Updated')
+				    	logger.info('Updated', exercise);
 				    }, function() {
 				    	logger.info('Cancelled', null);
 				    });
@@ -111,10 +105,6 @@
 				calculateChartValues();
 				logger.success('Removed exercise', vm.workout.exercises);
 			};
-
-			vm.openUrl = function(url) {
-				$window.open(url);
-			}
 		}
 	}
 })();
