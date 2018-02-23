@@ -1,7 +1,8 @@
 <link rel="stylesheet" href="dist/css/exercise.form.css">
 <md-content class="exercise-form-container md-inline-form" layout="column">
-	<header>
-		<h1 class="md-display-1">Add new exercise</h1>
+	<header ng-cloak>
+		<h1 class="md-display-1" ng-if="!vm.isEdit">Add new exercise</h1>
+		<h1 class="md-display-1" ng-if="vm.isEdit">Update exercise</h1>
 	</header>
 	<md-content layout-padding>
     <div>

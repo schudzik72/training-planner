@@ -35,13 +35,10 @@
 
 	let bodyParts = ['ABS', 'CHEST', 'UPPER BACK', 'LOWER BACK', 'SHOULDERS', 'BICEPS', 'TRICEPS'];
 
-	let exercises = [
-		new Exercise('0', 'Chest Press', 'Chest Press Description', exerciseTypes[0], ['chest'])
-	];
 	let workouts = [
-		new Workout('0', 'Mass Training Phase 1', 'Phase 1 mass training', angular.copy(workoutTypes[0]), exercises),
-		new Workout('0', 'Endurance Training', 'Test exercises for endurance', angular.copy(workoutTypes[1]), exercises),
-		new Workout('0', 'Performance', 'Exercises focusing on increasing body performance', angular.copy(workoutTypes[2]), exercises),
+		new Workout('0', 'Mass Training Phase 1', 'Phase 1 mass training', angular.copy(workoutTypes[0]), new Array()),
+		new Workout('0', 'Endurance Training', 'Test exercises for endurance', angular.copy(workoutTypes[1]), new Array()),
+		new Workout('0', 'Performance', 'Exercises focusing on increasing body performance', angular.copy(workoutTypes[2]), new Array()),
 	];
 	
 	function workoutService($q) {
@@ -52,7 +49,6 @@
 			removeWorkout: removeWorkout,
 			getWorkoutTypes: getWorkoutTypes,
 			getExerciseTypes: getExerciseTypes,
-			getExercises: getExercises,
 			insertExercise: insertExercise,
 			getBodyParts: getBodyParts,
 		};
@@ -95,12 +91,6 @@
 		function getExerciseTypes() {
 			let deferred = $q.defer();
 			deferred.resolve(exerciseTypes);
-			return deferred.promise;
-		}
-
-		function getExercises() {
-			let deferred = $q.defer();
-			deferred.resolve(exercises);
 			return deferred.promise;
 		}
 

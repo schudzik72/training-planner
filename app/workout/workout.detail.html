@@ -27,7 +27,7 @@
 			chart-data="vm.chart.data" chart-labels="vm.chart.labels">
 		</canvas> 
 
-		<md-content>
+		<md-content class="exercise-list">
 			<md-list flex>
 				<md-subheader class="md-no-sticky">Exercises</md-subheader>
 				<md-list-item class="md-3-line" ng-repeat="exercise in vm.workout.exercises" ng-click="showOptions = !showOptions">
@@ -40,7 +40,7 @@
 						<md-button ng-if="exercise.linkToExercise" ng-href="{{exercise.linkToExercise}}" target="_blank">
 							<md-icon md-svg-icon="img/icons/file-document-box.svg"></md-icon>
 						</md-button>
-						<md-button ng-click="vm.showEditExerciseForm($event, $index)">
+						<md-button ng-click="vm.showEditExerciseForm($event, exercise)">
 							<md-icon md-svg-icon="img/icons/pencil.svg"></md-icon>
 						</md-button>
 						<md-button ng-click="vm.removeExercise($index)">

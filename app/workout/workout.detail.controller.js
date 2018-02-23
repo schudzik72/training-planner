@@ -54,35 +54,56 @@
 			}
 
 			vm.showAddExerciseForm = function(event) {
-				$mdDialog.show({
-					controller: 'ExerciseFormController',
-					controllerAs: 'vm',
-					bindToController: true,
-					templateUrl: 'app/workout/exercise.form.html',
-					parent: angular.element(document.body),
-					targetEvent: event,
-					clickOutsideToClose: true,
-					fullscreen: vm.customFullscreen // Only for -xs, -sm breakpoints.
-			    })
-			    .then(function(exercise) {
-			    	workoutService.insertExercise(
-			    		new Exercise(
-			    			vm.workout.exercises.length + 1,
-			    			exercise.name, 
-			    			exercise.description, 
-			    			exercise.type, 
-			    			exercise.bodyPartsEngaged,
-			    			exercise.linkToExercise)
-			    		).then(exercises => vm.workout.exercises = exercises)
-			    		.then(calculateChartValues())
-			    		.then(() => logger.success('New exercise added', vm.exercise));
-			    }, function() {
-			    	logger.info('Cancelled', null);
-			    });
+				$mdDialog
+					.show({
+						controller: 'ExerciseFormController',
+						controllerAs: 'vm',
+						bindToController: true,
+						templateUrl: 'app/workout/exercise.form.html',
+						parent: angular.element(document.body),
+						targetEvent: event,
+						clickOutsideToClose: true,
+						fullscreen: vm.customFullscreen // Only for -xs, -sm breakpoints.
+				    })
+				    .then(function(exercise) {
+				    	logger.info(typeof vm.workout.exercises, null);
+				    	vm.workout.exercises.push(
+				    		new Exercise(
+				    			vm.workout.exercises.length + 1,
+				    			exercise.name, 
+				    			exercise.description, 
+				    			exercise.type, 
+				    			exercise.bodyPartsEngaged,
+				    			exercise.linkToExercise)
+				    		)
+				    	calculateChartValues();
+				    	logger.success('New exercise added', vm.exercise);
+				    }, function() {
+				    	logger.info('Cancelled', null);
+				    });
 			};
 
 			vm.showEditExerciseForm = function(event, editedExercise) {
-				logger.info('TODO Editing', null);
+				logger.info('TODO Editing', editedExercise);
+				$mdDialog
+					.show({
+						controller: 'ExerciseFormController',
+						controllerAs: 'vm',
+						bindToController: true,
+						templateUrl: 'app/workout/exercise.form.html',
+						locals: {
+							exercise: editedExercise
+						},
+						parent: angular.element(document.body),
+						targetEvent: event,
+						clickOutsideToClose: true,
+						fullscreen: vm.customFullscreen // Only for -xs, -sm breakpoints.
+				    })
+				    .then(function(exercise) {
+				    	logger.info('Updated')
+				    }, function() {
+				    	logger.info('Cancelled', null);
+				    });
 			};
 
 			vm.removeExercise = function(id) {
