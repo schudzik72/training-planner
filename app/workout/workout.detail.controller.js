@@ -93,9 +93,9 @@
 						clickOutsideToClose: true,
 						fullscreen: vm.customFullscreen // Only for -xs, -sm breakpoints.
 				    })
-				    .then(function(exercise) {
+				    .then(exercise => {
 				    	logger.info('Updated', exercise);
-				    }, function() {
+				    }, () => {
 				    	logger.info('Cancelled', null);
 				    });
 			};
@@ -105,6 +105,7 @@
 				calculateChartValues();
 				logger.success('Removed exercise', vm.workout.exercises);
 			};
+
 		}
 	}
 })();

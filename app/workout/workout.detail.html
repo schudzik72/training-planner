@@ -9,7 +9,7 @@
 		</h1>
 	</header>
 	<md-content layout="column">
-		<div id="workout-type-parameters-container" layout="row" layout-align="center center" layout-wrap ng-mouseover="workoutParametersContainerOnHover">
+		<div id="workout-type-parameters-container" layout="row" layout-align="center center" layout-wrap>
 			<div class="workout-type-parameters" layout="column" ng-repeat="parameter in vm.workout.type.parameters">
 				<span class="md-caption parameter-name">{{ parameter.name }}</span>
 				<span class="md-caption parameter-value">{{ parameter.value }}</span>
