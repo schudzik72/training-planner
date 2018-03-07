@@ -7,8 +7,6 @@
 
 	workoutService.$inject = ['$q', 'exception', 'logger', '$resource'];
 
-	let exerciseTypes = ['PUSH', 'PULL', 'BREAK', 'N/A'];
-
 	let bodyParts = ['ABS', 'CHEST', 'UPPER BACK', 'LOWER BACK', 'SHOULDERS', 'BICEPS', 'TRICEPS', 'LEGS'];
 
 	let BASE_URL = 'http://localhost:3000';
