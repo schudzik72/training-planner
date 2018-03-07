@@ -1,4 +1,7 @@
 {
+  "name": "training-planner",
+  "author": "Slawomir Chudzik",
+  "version": "1.0.0",
   "dev": "npm-run-all -p sass:* js:* html:*",
   "scripts": {
     "build-task:scss-compile": "node-sass-chokidar --source-map true scss/ -o dist/css",
