@@ -13,19 +13,17 @@
 		#workout-type-parameters-container {
 			margin-right: 40px;
 			.workout-type-parameters {
-				margin: 5px;
-				padding: 0 10px;
+				margin: 0 0 0 10px;
+				padding: 0;
 				@include border(2px, solid, black);
 				@include border-radius(8px);
 				width: 10vw;
 				text-align: center;
-				.parameter-name {
-					padding-top: 7px;
-				}
-				.parameter-value {
-					padding-bottom: 7px;
-					font-weight: 500;
-				}
+			}
+			#add-parameter-button {
+				@include border-radius(8px);
+				width: 10vw;
+				height: 72px;
 			}
 		}
 		md-content.exercise-list {

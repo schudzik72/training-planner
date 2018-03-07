@@ -5,13 +5,10 @@
 		.module('trainingPlanner.workout')
 		.controller('WorkoutFormController', WorkoutFormController);
 
-	WorkoutFormController.$inject = ['logger', '$mdDialog', 'workoutService'];
+	WorkoutFormController.$inject = ['logger', '$mdDialog'];
 
-	function WorkoutFormController(logger, $mdDialog, workoutService) {
+	function WorkoutFormController(logger, $mdDialog) {
 		let vm = this;
-
-		workoutService.getWorkoutTypes()
-			.then(response => vm.types = response);
 
 		vm.workout = {
 			name: '',

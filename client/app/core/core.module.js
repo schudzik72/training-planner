@@ -3,6 +3,7 @@
 
 	angular
 		.module('app.core', [
+			'ngResource',
 			'ngAnimate',
 			'ngMessages',
 			'ngAria',

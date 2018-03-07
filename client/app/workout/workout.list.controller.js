@@ -15,10 +15,11 @@
 		function init() {
 			vm.loaded = false;
 			workoutService.getWorkouts()
-				.then((response) => {
+				.then(response => {
+					logger.success('Loaded', response);
 					vm.workouts = response;
-					console.log(response);
-				});
+					vm.loaded = true;
+				}).catch(e => logger.error('Error occurred while loading workouts', e));
 			
 			vm.showAddWorkoutForm = function(event) {
 				$mdDialog.show({
@@ -32,7 +33,12 @@
 					fullscreen: vm.customFullscreen // Only for -xs, -sm breakpoints.
 			    })
 			    .then(function(workout) {
-			    	vm.workouts.push(new Workout(vm.workouts.length, workout.name, workout.description, workout.type, []));
+			    	workoutService.insertWorkout(workout)
+			    		.then(response => {
+			    			console.log(response);
+			    			workout.id = response.id;
+			    			vm.workouts.push(workout);
+			    		}).catch(error => logger.error('Error occurred', error));
 					logger.success('New workout added', vm.workouts);
 			    }, function() {
 			    	logger.info('Cancelled', null);
@@ -40,7 +46,11 @@
 			};
 
 			vm.remove = function(index) {
-				vm.workouts.splice(index, 1);
+				let id = vm.workouts[index].id;
+				workoutService.removeWorkout(id)
+					.then(response => {
+						vm.workouts.splice(index, 1);
+					}).catch(error => logger.error('Error occurred', error));
 			};
 		}
 	}

@@ -5,14 +5,14 @@
 	<h1 class="md-display-3">Workouts</h1>
 </header>
 <md-list class="workout-list">
-	<md-list-item class="animated md-2-line workout-list-item" ng-repeat="workout in vm.workouts" ng-init="workoutListIndex = $index">
+	<md-list-item class="animated md-2-line workout-list-item" ng-repeat="workout in vm.workouts" ng-init="index = $index">
 		<img ng-src="{{workout.type.iconPath}}" class="md-avatar"/>
     	<div class="md-list-item-text">
 			<h3>{{ workout.name }}</h3>
-			<p>{{ workout.type.name }}</p>
+			<p>{{ workout.description }}</p>
     	</div>
     	<md-button class="md-secondary" ui-sref="workout.detail({id: {{workout.id}}})">Open</md-button>
-    	<md-button class="md-secondary" ng-click="vm.remove(workoutListIndex)">Remove</md-button>
+    	<md-button class="md-secondary" ng-click="vm.remove(index)">Remove</md-button>
   	</md-list-item>
 	<md-list-item class="animated no-workouts" ng-if="vm.workouts.length === 0">
 		<h5 class="md-headline">No workouts yet</h5>

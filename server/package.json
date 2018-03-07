@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "server": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.16.2",
+    "body-parser": "^1.18.2",
+  	"sqlite3": "https://github.com/mapbox/node-sqlite3/tarball/master",
+    "nan": "^2.8.0",
+  }
+}

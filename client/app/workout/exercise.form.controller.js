@@ -14,23 +14,23 @@
 
 		function init() {
 			vm.isEdit = vm.exercise !== undefined;
-			vm.exercise = vm.isEdit === undefined ? 
+			vm.exercise = vm.isEdit === false ? 
 				{
 					name: '',
-					type: '',
+					exerciseTypeId: '',
 					description: '',
 					bodyPartsEngaged: [],
-					linkToExercise: ''
+					linkToExercise: '',
+					workoutId: vm.workoutId,
 				} :
 				vm.exercise;
 			workoutService.getExerciseTypes()
 				.then(types => vm.types = types)
-				.then(() => workoutService.getBodyParts())
+			workoutService.getBodyParts()
 				.then(bodyParts => vm.bodyParts = bodyParts);
 
 			vm.upsert = function(form) {
 				if(form.$valid) {
-					logger.info(typeof vm.exercise.linkToExercise);
 					let startingUrl = "http://";
     				let httpsStartingUrl = "https://";
 					if(vm.exercise.linkToExercise && !(vm.exercise.linkToExercise.startsWith(startingUrl) || vm.exercise.linkToExercise.startsWith(httpsStartingUrl))) {

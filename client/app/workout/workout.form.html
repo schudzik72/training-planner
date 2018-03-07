@@ -7,22 +7,10 @@
     <div>
 		<form name="form">
 			<div layout-gt-xs="row">
-				<md-input-container>
+				<md-input-container flex>
 					<label>Workout Name</label>
 					<input name="name" required ng-model="vm.workout.name" autocomplete="off">
 					<div ng-messages="form.name.$error">
-     	 				<div ng-message="required">This is required.</div>
-     	 			</div>
-				</md-input-container>
-
-				<md-input-container class="md-block" flex-gt-sm>
-					<label>Type</label>
-					<md-select ng-model="vm.workout.type" name="type" required>
-						<md-option ng-repeat="type in vm.types" ng-value="type">
-							{{ type.name }}	
-						</md-option>
-					</md-select>
-					<div ng-messages="form.type.$error">
      	 				<div ng-message="required">This is required.</div>
      	 			</div>
 				</md-input-container>

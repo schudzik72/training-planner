@@ -18,9 +18,9 @@
 
 				<md-input-container class="md-block" flex-gt-sm>
 					<label>Type</label>
-					<md-select ng-model="vm.exercise.type" name="type" required>
-						<md-option ng-repeat="type in vm.types" ng-value="type">
-							{{ type }}	
+					<md-select ng-model="vm.exercise.exerciseTypeId" name="type" required>
+						<md-option ng-repeat="exerciseType in vm.types" ng-value="exerciseType.id">
+							{{ exerciseType.type }}	
 						</md-option>
 					</md-select>
 					<div ng-messages="form.type.$error">
@@ -42,12 +42,12 @@
 			<div layout-gt-xs="row">
 				<md-input-container flex>
 					<label>Body parts engaged</label>
-					<md-select ng-model="vm.exercise.bodyPartsEngaged" name="type" required multiple>
+					<md-select ng-model="vm.exercise.bodyPartsEngaged" name="bodyPartsEngaged" required multiple>
 						<md-option ng-repeat="bodyPart in vm.bodyParts" ng-value="bodyPart">
 							{{ bodyPart }}	
 						</md-option>
 					</md-select>
-					<div ng-messages="form.type.$error">
+					<div ng-messages="form.bodyPartsEngaged.$error">
 						<div ng-message="required">
 							This is required.
 						</div>

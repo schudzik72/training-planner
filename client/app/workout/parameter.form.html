@@ -1,7 +1,8 @@
 <link rel="stylesheet" href="dist/css/parameter.form.css">
 <md-content class="parameter-form-container md-inline-form" layout="column">
 	<header>
-		<h1 class="md-display-1">Add new parameter</h1>
+		<h1 class="md-display-1" ng-if="!vm.isEdit">Add new parameter</h1>
+		<h1 class="md-display-1" ng-if="vm.isEdit">Edit parameter</h1>
 	</header>
 	<md-content layout-padding>
     <div>
@@ -26,7 +27,9 @@
 			</div>
 			<div layout-gt-xs="row" layout-align="end center">
 				<div>
-					<md-button ng-click="vm.add(form)">Add</md-button>
+					<md-button ng-click="vm.upsert(form)" ng-if="!vm.isEdit">Add</md-button>
+					<md-button class="md-warn" ng-click="vm.remove()" ng-if="vm.isEdit">Remove</md-button>
+					<md-button ng-click="vm.upsert(form)" ng-if="vm.isEdit">Update</md-button>
 				</div>
 			</div>
 		</form>
