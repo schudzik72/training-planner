@@ -10,6 +10,8 @@
 	let restApi = express();
 	restApi.use(bodyParser.json());
 
+	let JSendResponse = require('./jsend.response');
+
 	restApi.use(function (request, response, next) {
 	    // Website you wish to allow to connect
 	    response.setHeader('Access-Control-Allow-Origin', 'http://localhost:8000');
@@ -28,12 +30,10 @@
 		(request, response) => {
 			db.all('SELECT * FROM WORKOUT',
 				(error, rows) => {
-					console.log(error);
-					console.log(rows);
 					if(error) {
-						response.send(error);
+						response.send(new JSendResponse('error', null, error));
 					} else {
-						response.json(rows);
+						response.json(new JSendResponse('success', rows));
 					}
 				});
 		});
@@ -43,12 +43,11 @@
 			db.get(`SELECT * FROM WORKOUT WHERE id = ${id}`,
 				(error, row) => {
 					if(error) {
-						console.log(error);
-						response.status(500).json(error);
+						response.json(new JSendResponse('error', null, error));
 					} else if(row === undefined) {
-						response.sendStatus(404);
+						response.json(new JSendResponse('error', null, 'Not found'));
 					} else {
-						response.json(row);
+						response.json(new JSendResponse('success', row));
 					}
 				});
 		});
@@ -57,14 +56,13 @@
 			let workout = request.body;
 			db.run('INSERT INTO WORKOUT(name, description) VALUES(?, ?)', 
 				[workout.name, workout.description],
-				function(error) {
+				error => {
 					let id = this.lastID;
 					if(error) {
-						response.send(error);
+						response.json(new JSendResponse('error', null, error));
 					} else {
-						response.status(201).json({
-							id: id
-						});
+						workout.id = id;
+						response.json(new JSendResponse('success', workout));
 					}
 				});
 		});
@@ -75,9 +73,9 @@
 				[workoutId],
 				error => {
 					if(error) {
-						response.send(error);
+						response.json(new JSendResponse('error', null, error));
 					} else {
-						response.status(204).send('SUCCESS');
+						response.json(new JSendResponse('success'));
 					}
 				});
 		});
@@ -87,9 +85,9 @@
 			db.all('SELECT * FROM EXERCISE_TYPE',
 				(error, rows) => {
 					if(error) {
-						response.send(error);
+						response.json(new JSendResponse('error', null, error));
 					} else {
-						response.json(rows);
+						response.json(new JSendResponse('success', rows));
 					}
 				});
 		});
@@ -99,9 +97,9 @@
 			db.get(`SELECT * FROM EXERCISE_TYPE WHERE id = ${id}`,
 				(error, row) => {
 					if(error) {
-						response.status(404).send(error);
+						response.json(new JSendResponse('error', null, error));
 					} else {
-						response.json(row);
+						response.json(new JSendResponse('success', row));
 					}
 				});
 		});
@@ -110,15 +108,13 @@
 			let type = request.body.type;
 			db.run('INSERT INTO EXERCISE_TYPE(type) VALUES(?)',
 				[type],
-				function(error) {
+				error => {
 					let id = this.lastID;
 					if(error) {
-						console.log(error);
-						response.send(error);
+						response.json(new JSendResponse('error', null, error));
 					} else {
-						response.status(201).json({
-							id: id
-						});
+						type.id = id;
+						response.json(new JSendResponse('success', type));
 					}
 				});
 		});
@@ -126,12 +122,11 @@
 		(request, response) => {
 			let id = request.params.id;
 			db.run(`DELETE FROM EXERCISE_TYPE WHERE id = ${id}`,
-				(error) => {
+				error => {
 					if(error) {
-						console.log(error);
-						response.send(error);
+						response.json(new JSendResponse('error', null, error));
 					} else {
-						response.statusStatus(204);
+						response.json(new JSendResponse('success'));
 					}
 				});
 		});
@@ -141,9 +136,9 @@
 			db.all(`SELECT * FROM EXERCISE`,
 				(error, rows) => {
 					if(error) {
-						response.status(404).send(error);
+						response.json(new JSendResponse('error', null, error));
 					} else {
-						response.json(rows);
+						response.json(new JSendResponse('success', rows));
 					}
 				});
 		});
@@ -153,9 +148,9 @@
 			db.get(`SELECT * FROM EXERCISE WHERE id = ${id}`,
 				(error, row) => {
 					if(error) {
-						response.status(404).send(error);
+						response.json(new JSendResponse('error', null, error));
 					} else {
-						response.json(row);
+						response.json(new JSendResponse('success', row));
 					}
 				});
 		});
@@ -165,9 +160,9 @@
 			db.run(`DELETE FROM EXERCISE WHERE id = ${id}`,
 				(error) => {
 					if(error) {
-						response.send(error);
+						response.json(new JSendResponse('error', null, error));
 					} else {
-						response.sendStatus(204);
+						response.json(new JSendResponse('success'));
 					}
 				});
 		});
@@ -177,9 +172,9 @@
 			db.all(`SELECT * FROM EXERCISE WHERE workoutId = ${id}`,
 				(error, rows) => {
 					if(error) {
-						response.status(404).send(error);
+						response.json(new JSendResponse('error', null, error));
 					} else {
-						response.json(rows);
+						response.json(new JSendResponse('success', rows));
 					}
 				});
 		});
@@ -188,14 +183,12 @@
 			let exercise = request.body;
 			db.run(`INSERT INTO EXERCISE(name, description, exerciseTypeId, bodyPartsEngaged, linkToExercise, workoutId) VALUES(?, ?, ?, ?, ?, ?)`,
 				[exercise.name, exercise.description, exercise.exerciseTypeId, exercise.bodyPartsEngaged, exercise.linkToExercise, exercise.workoutId],
-				function(error) {
+				error => {
 					let id = this.lastID;
 					if(error) {
-						response.send(error);
+						response.json(new JSendResponse('error', null, error));
 					} else {
-						response.status(201).json({
-							id: id
-						})
+						response.json(new JSendResponse('success', exercise));
 					}
 				})
 		});
@@ -207,9 +200,9 @@
 				[exercise.name, exercise.description, exercise.exerciseTypeId, exercise.bodyPartsEngaged, exercise.linkToExercise, exercise.workoutId, id],
 				error => {
 					if(error) {
-						response.send(error);
+						response.json(new JSendResponse('error', null, error));
 					} else {
-						response.sendStatus(200);
+						response.json(new JSendResponse('success', exercise));
 					}
 				})
 		})
@@ -219,9 +212,9 @@
 			db.run(`DELETE FROM EXERCISE WHERE id = ${id}`,
 				error => {
 					if(error) {
-						response.send(error);
+						response.json(new JSendResponse('error', null, error));
 					} else {
-						response.status(204).send('SUCCESS');
+						response.json(new JSendResponse('success'));
 					}
 				});
 		});
@@ -232,9 +225,9 @@
 			db.all(`SELECT * FROM PARAMETER WHERE workoutId = ${id}`,
 				(error, rows) => {
 					if(error) {
-						response.status(404).send(error);
+						response.json(new JSendResponse('error', null, error));
 					} else {
-						response.json(rows);
+						response.json(new JSendResponse('success', rows));
 					}
 				});
 		});
@@ -244,14 +237,12 @@
 			let parameter = request.body;
 			db.run('INSERT INTO PARAMETER(name, value, workoutId) VALUES(?, ?, ?)',
 				[parameter.name, parameter.value, id],
-				function(error) {
+				error => {
 					let id = this.lastID;
 					if(error) {
-						response.send(error);
+						response.json(new JSendResponse('error', null, error));
 					} else {
-						response.status(201).json({
-							id: id
-						});
+						response.json(new JSendResponse('success', parameter));
 					}
 				});
 		});
@@ -263,9 +254,9 @@
 				[parameter.name, parameter.value, id],
 				error => {
 					if(error) {
-						response.send(error);
+						response.json(new JSendResponse('error', null, error));
 					} else {
-						response.sendStatus(200);
+						response.json(new JSendResponse('success', parameter));
 					}
 				});
 		});
@@ -275,9 +266,9 @@
 			db.run(`DELETE FROM PARAMETER WHERE id = ${id}`,
 				error => {
 					if(error) {
-						response.send(error);
+						response.json(new JSendResponse('error', null, error));
 					} else {
-						response.status(204).send('SUCCESS');
+						response.json(new JSendResponse('success'));
 					}
 				});
 		});
