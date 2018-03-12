@@ -56,7 +56,7 @@
 			let workout = request.body;
 			db.run('INSERT INTO WORKOUT(name, description) VALUES(?, ?)', 
 				[workout.name, workout.description],
-				error => {
+				function(error) {
 					let id = this.lastID;
 					if(error) {
 						response.json(new JSendResponse('error', null, error));
@@ -108,7 +108,7 @@
 			let type = request.body.type;
 			db.run('INSERT INTO EXERCISE_TYPE(type) VALUES(?)',
 				[type],
-				error => {
+				function(error) {
 					let id = this.lastID;
 					if(error) {
 						response.json(new JSendResponse('error', null, error));
@@ -183,7 +183,7 @@
 			let exercise = request.body;
 			db.run(`INSERT INTO EXERCISE(name, description, exerciseTypeId, bodyPartsEngaged, linkToExercise, workoutId) VALUES(?, ?, ?, ?, ?, ?)`,
 				[exercise.name, exercise.description, exercise.exerciseTypeId, exercise.bodyPartsEngaged, exercise.linkToExercise, exercise.workoutId],
-				error => {
+				function(error) {
 					let id = this.lastID;
 					if(error) {
 						response.json(new JSendResponse('error', null, error));
@@ -237,7 +237,7 @@
 			let parameter = request.body;
 			db.run('INSERT INTO PARAMETER(name, value, workoutId) VALUES(?, ?, ?)',
 				[parameter.name, parameter.value, id],
-				error => {
+				function(error) {
 					let id = this.lastID;
 					if(error) {
 						response.json(new JSendResponse('error', null, error));

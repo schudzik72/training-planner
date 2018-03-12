@@ -7,7 +7,10 @@
 
 	workoutService.$inject = ['$q', 'exception', 'logger', '$resource'];
 
-	let bodyParts = ['ABS', 'CHEST', 'UPPER BACK', 'LOWER BACK', 'SHOULDERS', 'BICEPS', 'TRICEPS', 'LEGS'];
+	let bodyPartsResponse = {
+		status: 'success',
+		data: ['ABS', 'CHEST', 'UPPER BACK', 'LOWER BACK', 'SHOULDERS', 'BICEPS', 'TRICEPS', 'LEGS'],
+	};
 
 	let BASE_URL = 'http://localhost:3000';
 	
@@ -34,7 +37,7 @@
 
 		// Workout
 		function getWorkouts() {
-			return $resource(BASE_URL + '/workouts').query().$promise;
+			return $resource(BASE_URL + '/workouts').get().$promise;
 		}
 
 		function getWorkout(id) {
@@ -51,7 +54,7 @@
 
 		// Exercises
 		function getWorkoutExercises(workoutId) {
-			return $resource(BASE_URL + `/workouts/${workoutId}/exercises`).query().$promise;
+			return $resource(BASE_URL + `/workouts/${workoutId}/exercises`).get().$promise;
 		}
 
 		// Parameters
@@ -69,11 +72,11 @@
 			return $resource(BASE_URL + `/parameters/${id}`).remove().$promise;
 		}
 		function getWorkoutParameters(workoutId) {
-			return $resource(BASE_URL + `/workouts/${workoutId}/parameters`).query().$promise;
+			return $resource(BASE_URL + `/workouts/${workoutId}/parameters`).get().$promise;
 		}
 
 		function getExerciseTypes() {
-			return $resource(BASE_URL + '/exercise-types').query().$promise;
+			return $resource(BASE_URL + '/exercise-types').get().$promise;
 		}
 		function insertExercise(exercise) {
 			let requestBody = angular.copy(exercise);
@@ -97,7 +100,7 @@
 
 		function getBodyParts() {
 			let deferred = $q.defer();
-			deferred.resolve(bodyParts);
+			deferred.resolve(bodyPartsResponse);
 			return deferred.promise;
 		}
 	}

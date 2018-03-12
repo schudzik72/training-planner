@@ -16,10 +16,14 @@
 			vm.loaded = false;
 			workoutService.getWorkouts()
 				.then(response => {
-					logger.success('Loaded', response);
-					vm.workouts = response;
-					vm.loaded = true;
-				}).catch(e => logger.error('Error occurred while loading workouts', e));
+					if(response.status === 'success') {
+						logger.success('Loaded', response);
+						vm.workouts = response.data;
+						vm.loaded = true;
+					} else {
+						logger.error(response.message, null);
+					}
+				}).catch(error => logger.error('Unexpected error occurred', error));
 			
 			vm.showAddWorkoutForm = function(event) {
 				$mdDialog.show({
@@ -35,22 +39,30 @@
 			    .then(function(workout) {
 			    	workoutService.insertWorkout(workout)
 			    		.then(response => {
-			    			console.log(response);
-			    			workout.id = response.id;
-			    			vm.workouts.push(workout);
-			    		}).catch(error => logger.error('Error occurred', error));
-					logger.success('New workout added', vm.workouts);
+			    			if(response.status) {
+				    			workout.id = response.data.id;
+				    			vm.workouts.push(workout);
+								logger.success('New workout added', workout);
+				    		} else {
+				    			logger.error(error.message, null);
+				    		}
+			    		}).catch(error => logger.error('Unexpected error occurred', error));
 			    }, function() {
 			    	logger.info('Cancelled', null);
 			    });
 			};
 
-			vm.remove = function(index) {
+			vm.removeWorkout = function(index) {
 				let id = vm.workouts[index].id;
 				workoutService.removeWorkout(id)
 					.then(response => {
-						vm.workouts.splice(index, 1);
-					}).catch(error => logger.error('Error occurred', error));
+						if(response.status === 'success') {
+							logger.success('Workout removed');
+							vm.workouts.splice(index, 1);
+						} else {
+							logger.error(response.message, null);
+						}
+					}).catch(error => logger.error('Unexpected error occurred', error));
 			};
 		}
 	}

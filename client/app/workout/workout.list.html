@@ -12,7 +12,7 @@
 			<p>{{ workout.description }}</p>
     	</div>
     	<md-button class="md-secondary" ui-sref="workout.detail({id: {{workout.id}}})">Open</md-button>
-    	<md-button class="md-secondary" ng-click="vm.remove(index)">Remove</md-button>
+    	<md-button class="md-secondary" ng-click="vm.removeWorkout(index)">Remove</md-button>
   	</md-list-item>
 	<md-list-item class="animated no-workouts" ng-if="vm.workouts.length === 0">
 		<h5 class="md-headline">No workouts yet</h5>

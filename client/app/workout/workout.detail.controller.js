@@ -19,16 +19,28 @@
 			vm.exercises = [];
 			workoutService.getWorkout($stateParams.id)
 				.then(response => {
-					vm.workout = response;
-					return workoutService.getWorkoutParameters(vm.workout.id);
+					if(response.status === 'success') {
+						vm.workout = response.data;
+						return workoutService.getWorkoutParameters(vm.workout.id);
+					} else {
+						logger.error(response.message, null);
+					}
 				}).then(response => {
-					vm.parameters = response;
-					return workoutService.getWorkoutExercises(vm.workout.id);
+					if(response.status === 'success') {
+						vm.parameters = response.data;
+						return workoutService.getWorkoutExercises(vm.workout.id);
+					} else {
+						logger.error(response.message, null);
+					}
 				}).then(response => {
-					vm.exercises = response;
-					vm.exercises.forEach(exercise => exercise.bodyPartsEngaged = exercise.bodyPartsEngaged.split(','));
-					calculateChartValues();
-					vm.loaded = true;
+					if(response.status === 'success') {
+						vm.exercises = response.data;
+						vm.exercises.forEach(exercise => exercise.bodyPartsEngaged = exercise.bodyPartsEngaged.split(','));
+						calculateChartValues();
+						vm.loaded = true;
+					} else {
+						logger.error(response.message, null);
+					}
 				}).catch(error => logger.error('Error occurred', error));
 
 			function calculateChartValues() {
@@ -58,6 +70,7 @@
 					vm.chart.labels.push(entry[0]);
 					vm.chart.data[0].push(entry[1]);
 				}
+				console.log(vm.chart);
 			}
 
 			vm.showAddExerciseForm = function(event) {
@@ -78,10 +91,14 @@
 				    .then(function(exercise) {
 				    	workoutService.insertExercise(exercise)
 				    		.then(response => {
-				    			exercise.id = response.id;
-				    			vm.exercises.push(exercise);
-						    	calculateChartValues();
-			    				logger.success('New exercise added', vm.exercise);
+				    			if(response.status === 'success') {
+				    				exercise.id = response.data.id;
+					    			vm.exercises.push(exercise);
+							    	calculateChartValues();
+				    				logger.success('New exercise added', response);
+				    			} else {
+				    				logger.error(response.message, null);
+				    			}
 				    		}).catch(error => logger.error('Error occurred', error));
 				    }, function() {
 				    	logger.info('Cancelled', null);
@@ -106,9 +123,13 @@
 				    .then(exercise => {
 				    	workoutService.updateExercise(exercise)
 				    		.then(response => {
-			    				vm.exercises[index] = exercise;
-						    	calculateChartValues();
-			    				logger.success('Updated successfuly', vm.exercise);
+			    				if(response.status === 'success') {
+			    					vm.exercises[index] = exercise;
+						    		calculateChartValues();
+			    					logger.success('Updated successfuly', response);
+			    				} else {
+			    					logger.error(response.message, null);
+			    				}
 				    		}).catch(error => logger.error('Error occurred', error));
 				    }, () => {
 				    	logger.info('Cancelled', null);
@@ -121,7 +142,7 @@
 					.then(response => {
 						vm.exercises.splice(index, 1);
 						calculateChartValues();
-						logger.success('Removed exercise', vm.exercises);
+						logger.success('Removed exercise', response);
 					}).catch(error => logger.error('Error occurred', error));
 			};
 
@@ -142,7 +163,7 @@
 				    	workoutService.insertParameter(vm.workout.id, parameter)
 				    		.then(response => {
 				    			vm.parameters.push(parameter);
-						    	logger.success('New parameter added', parameter);
+						    	logger.success('New parameter added', response);
 				    		}).catch(error => logger.error('Error occurred', error));
 				    }, () => {
 				    	logger.info('Cancelled', null);
@@ -170,13 +191,13 @@
 					    	workoutService.removeParameter(parameter.id)
 					    		.then(response => {
 					    			vm.parameters.splice(index, 1);
-					    			logger.success('Parameter removed', null);
+					    			logger.success('Parameter removed', response);
 					    		}).catch(error => logger.error('Error occurred', error));
 					    } else {
 					    	workoutService.updateParameter(parameter)
 					    		.then(response => {
 					    			vm.parameters[index] = parameter;
-							    	logger.success('Parameter updated', parameter);
+							    	logger.success('Parameter updated', response);
 					    		}).catch(error => logger.error('Error occurred', error));
 					    }
 				    }, () => {

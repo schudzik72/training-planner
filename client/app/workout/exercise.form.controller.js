@@ -25,9 +25,21 @@
 				} :
 				vm.exercise;
 			workoutService.getExerciseTypes()
-				.then(types => vm.types = types)
+				.then(response => {
+					if(response.status === 'success') {
+						vm.types = response.data
+					} else {
+						logger.error(response.message, null);
+					}
+				})
 			workoutService.getBodyParts()
-				.then(bodyParts => vm.bodyParts = bodyParts);
+				.then(response => {
+					if(response.status === 'success') {
+						vm.bodyParts = response.data;
+					} else {
+						logger.error(response.message, null);
+					}
+				});
 
 			vm.upsert = function(form) {
 				if(form.$valid) {
