@@ -1,16 +1,20 @@
 @import 'mixins';
 #summary-container {
-	.header {
-		md-list {
-			@include border(2px, solid, black);
-			@include border-radius(20px);
-			img.md-avatar {
-				padding: 10px;
-				font-size: 40px;
-			}
+	height: 100vh;
+	overflow-y: hidden;
+
+	.profile {
+
+		.profile-picture {
+			@include round-image();
+			margin-top: 49px;
+			@include icon-size(25em);
 		}
-	}
-	.workout-summary {
+
+		.profile-summary {
+			margin-left: 20px;
+			width: 40vw;
+		}
 
 	}
 }
