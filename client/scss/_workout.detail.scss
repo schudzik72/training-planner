@@ -2,10 +2,21 @@
 .workout-detail-container {
 	header {
 		h1 {
+			position: relative;
+			
 			md-icon {
 				width: 50px;
 				height: 50px;
 				padding-bottom: 4px;
+			}
+
+			.workout-name-inline-edit-button {
+				position: absolute;
+				top: -3px;
+			}
+
+			form[name="workoutNameForm"] {
+				font-size: 16px;
 			}
 		}
 	}
@@ -25,6 +36,13 @@
 				width: 10vw;
 				height: 72px;
 			}
+		}
+		.workout-description-inline-edit-button {
+			position: absolute;
+			left: -3px;
+		}
+		#radar {
+			@include animation-duration(1s);
 		}
 		md-content.exercise-list {
 			overflow: unset !important;

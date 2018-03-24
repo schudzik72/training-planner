@@ -7,5 +7,7 @@
 			'trainingPlanner.layout',
 			'trainingPlanner.summary',
 			'trainingPlanner.workout',
+			'trainingPlanner.exercise',
+			'trainingPlanner.parameter',
 		]);
 })();

@@ -2,12 +2,12 @@
 	'use strict';
 
 	angular
-		.module('trainingPlanner.workout')
+		.module('trainingPlanner.exercise')
 		.controller('ExerciseFormController', ExerciseFormController);
 
-	ExerciseFormController.$inject = ['logger', 'workoutService', '$mdDialog'];
+	ExerciseFormController.$inject = ['logger', 'dataService', '$mdDialog'];
 
-	function ExerciseFormController(logger, workoutService, $mdDialog) {
+	function ExerciseFormController(logger, dataService, $mdDialog) {
 		let vm = this;
 
 		init();
@@ -24,7 +24,7 @@
 					workoutId: vm.workoutId,
 				} :
 				vm.exercise;
-			workoutService.getExerciseTypes()
+			dataService.getExerciseTypes()
 				.then(response => {
 					if(response.status === 'success') {
 						vm.types = response.data
@@ -32,7 +32,7 @@
 						logger.error(response.message, null);
 					}
 				})
-			workoutService.getBodyParts()
+			dataService.getBodyParts()
 				.then(response => {
 					if(response.status === 'success') {
 						vm.bodyParts = response.data;

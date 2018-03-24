@@ -1,0 +1,25 @@
+<span ng-show="!vm.loaded" 
+	layout-fill layout="row" 
+	layout-align="center center">
+	<md-progress-circular md-diameter="96"></md-progress-circular flex>
+</span>
+<span ng-show="vm.loaded">
+	<md-button class="md-fab md-fab-top-right" aria-label="Add" ng-click="vm.showAddExerciseTypeForm($event)">
+		<md-icon md-svg-icon="img/icons/plus.svg"></md-icon>
+	</md-button>
+	<header class="animated fadeIn">
+		<h1 class="md-display-3">Exercise Types</h1>
+	</header>
+	<md-list class="exercise-type-list">
+		<md-list-item class="animated md-2-line exercise-type-list-item" ng-repeat="exerciseType in vm.exerciseTypes">
+			<img ng-src="img/icons/ic-launch-24px.svg" class="md-avatar"/>
+	    	<div class="md-list-item-text">
+				<h3>{{ exerciseType.type }}</h3>
+	    	</div>
+	    	<md-button class="md-secondary" ng-click="vm.removeExerciseType($index)">Remove</md-button>
+	  	</md-list-item>
+		<md-list-item class="animated no-exercise-types" ng-if="vm.exerciseTypes.length === 0">
+			<h5 class="md-headline">No exercise types yet</h5>
+		</md-list-item>
+	</md-list>
+</span>

@@ -9,19 +9,26 @@
 			<div layout-gt-xs="row">
 				<md-input-container flex>
 					<label>Workout Name</label>
-					<input name="name" required ng-model="vm.workout.name" autocomplete="off">
+					<input name="name" 
+						required 
+						ng-model="vm.workout.name" autocomplete="off"
+						md-maxlength="50">
 					<div ng-messages="form.name.$error">
      	 				<div ng-message="required">This is required.</div>
+     	 				<div ng-message="md-maxlength">
+     	 					That's too long.
+     	 				</div>
      	 			</div>
 				</md-input-container>
 			</div>
 			<div layout-gt-xs="row">
 				<md-input-container flex>
 					<label>Description</label>
-					<textarea name="description" ng-model="vm.workout.description" md-maxlength="150"></textarea>
+					<textarea name="description" 
+						ng-model="vm.workout.description" md-maxlength="128"></textarea>
 					<div ng-messages="form.description.$error">
 						<div ng-message="md-maxlength">
-							That's too long
+							That's too long.
 						</div>
 					</div>
 				</md-input-container>

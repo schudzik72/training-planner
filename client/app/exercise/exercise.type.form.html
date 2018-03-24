@@ -1,0 +1,34 @@
+<link rel="stylesheet" href="dist/css/exercise.type.form.css">
+<md-content class="exercise-type-form-container md-inline-form" layout="column">
+	<header>
+		<h1 class="md-display-1">Add new exercise type</h1>
+	</header>
+	<md-content layout-padding>
+    <div>
+		<form name="form">
+			<div layout-gt-xs="row">
+				<md-input-container flex>
+					<label>Type</label>
+					<input name="type" 
+						required 
+						ng-model="vm.exerciseType.type" 
+						autocomplete="off"
+						md-maxlength="50">
+					<div ng-messages="form.type.$error">
+	 					<div ng-message="required">
+	 						This is required.
+	 					</div>
+	 					<div ng-message="md-maxlength">
+	 						That's too long
+	 					</div>
+     	 			</div>
+				</md-input-container>
+			</div>
+			<div layout-gt-xs="row" layout-align="end center">
+				<div>
+					<md-button ng-click="vm.insert(form)">Add</md-button>
+				</div>
+			</div>
+		</form>
+	</div>
+</md-content>

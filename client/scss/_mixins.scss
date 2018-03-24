@@ -32,3 +32,14 @@
 	    -ms-animation-name: $name;
 	        animation-name: $name;
 }
+
+@mixin icon-size($size) {
+	width: $size;
+	height: $size;
+}
+
+@mixin round-image() {
+	position: relative;
+	overflow: hidden;
+	@include border-radius(50%);
+}

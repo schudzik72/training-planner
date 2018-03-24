@@ -5,37 +5,47 @@
 		.module('trainingPlanner.workout')
 		.controller('WorkoutDetailController', WorkoutDetailController);
 
-	WorkoutDetailController.$inject = ['logger', '$stateParams', 'workoutService', '$timeout', '$mdDialog'];
+	WorkoutDetailController.$inject = ['logger', '$stateParams', 'dataService', '$timeout', '$mdDialog'];
 
-	function WorkoutDetailController(logger, $stateParams, workoutService, $timeout, $mdDialog) {
+	function WorkoutDetailController(logger, $stateParams, dataService, $timeout, $mdDialog) {
 		let vm = this;
 
 		init();
 
 		function init() {
 			vm.loaded = false;
-			vm.workout = {};
+			vm.workout = {
+				name: '',
+				description: '',
+			};
 			vm.parameters = [];
 			vm.exercises = [];
-			workoutService.getWorkout($stateParams.id)
+			vm.editWorkoutName = false;
+			dataService.getWorkout($stateParams.id)
 				.then(response => {
 					if(response.status === 'success') {
 						vm.workout = response.data;
-						return workoutService.getWorkoutParameters(vm.workout.id);
+						vm.updatedWorkout = angular.copy(vm.workout);
+						return dataService.getWorkoutParameters(vm.workout.id);
+					} else if(response.status === 'fail') {
+						logger.warn(response.message, null);
 					} else {
 						logger.error(response.message, null);
 					}
 				}).then(response => {
 					if(response.status === 'success') {
 						vm.parameters = response.data;
-						return workoutService.getWorkoutExercises(vm.workout.id);
+						return dataService.getWorkoutExercises(vm.workout.id);
 					} else {
 						logger.error(response.message, null);
 					}
 				}).then(response => {
 					if(response.status === 'success') {
 						vm.exercises = response.data;
-						vm.exercises.forEach(exercise => exercise.bodyPartsEngaged = exercise.bodyPartsEngaged.split(','));
+						vm.exercises.forEach(exercise => {
+							exercise.bodyPartsEngaged = exercise.bodyPartsEngaged.split(',');
+							exercise.showOptions = false;
+						});
 						calculateChartValues();
 						vm.loaded = true;
 					} else {
@@ -82,14 +92,14 @@
 						locals: {
 							workoutId: vm.workout.id
 						},
-						templateUrl: 'app/workout/exercise.form.html',
+						templateUrl: 'app/exercise/exercise.form.html',
 						parent: angular.element(document.body),
 						targetEvent: event,
 						clickOutsideToClose: true,
 						fullscreen: vm.customFullscreen // Only for -xs, -sm breakpoints.
 				    })
 				    .then(function(exercise) {
-				    	workoutService.insertExercise(exercise)
+				    	dataService.insertExercise(exercise)
 				    		.then(response => {
 				    			if(response.status === 'success') {
 				    				exercise.id = response.data.id;
@@ -105,13 +115,33 @@
 				    });
 			};
 
+			vm.updateWorkout = function() {
+				dataService.updateWorkout(vm.updatedWorkout)
+					.then(response => {
+						if(response.status === 'success') {
+							vm.workout = angular.copy(vm.updatedWorkout);
+							logger.success('Workout updated successfuly', response);
+							vm.editWorkoutName = false;
+							vm.editWorkoutDescription = false;
+						} else {
+							logger.error(response.message, response);
+						}
+					}).catch(error => logger.error('Error occurred', error));
+			};
+
+			vm.cancelWorkoutUpdate = function() {
+				vm.updatedWorkout = angular.copy(vm.workout);
+				vm.editWorkoutName = false;
+				vm.editWorkoutDescription = false;
+			};
+
 			vm.showEditExerciseForm = function(event, index) {
 				$mdDialog
 					.show({
 						controller: 'ExerciseFormController',
 						controllerAs: 'vm',
 						bindToController: true,
-						templateUrl: 'app/workout/exercise.form.html',
+						templateUrl: 'app/exercise/exercise.form.html',
 						locals: {
 							exercise: vm.exercises[index]
 						},
@@ -121,7 +151,7 @@
 						fullscreen: vm.customFullscreen // Only for -xs, -sm breakpoints.
 				    })
 				    .then(exercise => {
-				    	workoutService.updateExercise(exercise)
+				    	dataService.updateExercise(exercise)
 				    		.then(response => {
 			    				if(response.status === 'success') {
 			    					vm.exercises[index] = exercise;
@@ -133,12 +163,13 @@
 				    		}).catch(error => logger.error('Error occurred', error));
 				    }, () => {
 				    	logger.info('Cancelled', null);
+				    	vm.exercises[index].showOptions = false;
 				    });
 			};
 
 			vm.removeExercise = function(index) {
 				let id = vm.exercises[index].id;
-				workoutService.removeExercise(id)
+				dataService.removeExercise(id)
 					.then(response => {
 						vm.exercises.splice(index, 1);
 						calculateChartValues();
@@ -152,7 +183,7 @@
 						controller: 'ParameterFormController',
 						controllerAs: 'vm',
 						bindToController: true,
-						templateUrl: 'app/workout/parameter.form.html',
+						templateUrl: 'app/parameter/parameter.form.html',
 						parent: angular.element(document.body),
 						targetEvent: event,
 						clickOutsideToClose: true,
@@ -160,7 +191,7 @@
 				    })
 				    .then(data => {
 				    	let parameter = data.parameter;
-				    	workoutService.insertParameter(vm.workout.id, parameter)
+				    	dataService.insertParameter(vm.workout.id, parameter)
 				    		.then(response => {
 				    			vm.parameters.push(parameter);
 						    	logger.success('New parameter added', response);
@@ -176,7 +207,7 @@
 						controller: 'ParameterFormController',
 						controllerAs: 'vm',
 						bindToController: true,
-						templateUrl: 'app/workout/parameter.form.html',
+						templateUrl: 'app/parameter/parameter.form.html',
 						locals: {
 							parameter: vm.parameters[index]
 						},
@@ -188,13 +219,13 @@
 				    .then(data => {
 				    	let parameter = data.parameter;
 				    	if(data.toDelete) {
-					    	workoutService.removeParameter(parameter.id)
+					    	dataService.removeParameter(parameter.id)
 					    		.then(response => {
 					    			vm.parameters.splice(index, 1);
 					    			logger.success('Parameter removed', response);
 					    		}).catch(error => logger.error('Error occurred', error));
 					    } else {
-					    	workoutService.updateParameter(parameter)
+					    	dataService.updateParameter(parameter)
 					    		.then(response => {
 					    			vm.parameters[index] = parameter;
 							    	logger.success('Parameter updated', response);

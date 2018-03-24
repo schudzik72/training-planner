@@ -2,7 +2,7 @@
 	'use strict';
 
 	angular
-		.module('trainingPlanner.workout')
+		.module('trainingPlanner.parameter')
 		.controller('ParameterFormController', ParameterFormController);
 
 	ParameterFormController.$inject = ['logger', '$mdDialog'];

@@ -2,27 +2,43 @@
 	'use strict';
 
 	angular
-		.module('trainingPlanner.workout')
-		.factory('workoutService', workoutService);
+		.module('app.core')
+		.factory('dataService', dataService);
 
-	workoutService.$inject = ['$q', 'exception', 'logger', '$resource'];
+	dataService.$inject = ['$q', 'exception', 'logger', '$resource'];
 
-	let bodyPartsResponse = {
+	let USER_MOCK = {
+		firstName: 'John',
+		lastName: 'Doe',
+		getName: function() {
+			return this.firstName + ' ' + this.lastName
+		},
+		bodyType: 'endomorph',
+		height: '1.81m',
+		weight: '70kg',
+	};
+
+	let BODY_PARTS = {
 		status: 'success',
 		data: ['ABS', 'CHEST', 'UPPER BACK', 'LOWER BACK', 'SHOULDERS', 'BICEPS', 'TRICEPS', 'LEGS'],
 	};
 
 	let BASE_URL = 'http://localhost:3000';
 	
-	function workoutService($q, exception, logger, $resource) {
+	function dataService($q, exception, logger, $resource) {
 		let service = {
+			getUser: getUser,
 			getWorkouts: getWorkouts,
 			getWorkout: getWorkout,
+			updateWorkout: updateWorkout,
 			getWorkoutExercises: getWorkoutExercises,
 			getWorkoutParameters: getWorkoutParameters,
 			insertWorkout: insertWorkout,
 			removeWorkout: removeWorkout,
 			getExerciseTypes: getExerciseTypes,
+			insertExerciseType: insertExerciseType,
+			removeExerciseType: removeExerciseType,
+			getExercises: getExercises,
 			insertExercise: insertExercise,
 			removeExercise: removeExercise,
 			updateExercise: updateExercise,
@@ -35,6 +51,14 @@
 		return service;
 		///////////////
 
+		// User
+
+		function getUser() {
+			let deferred = $q.defer();
+			deferred.resolve(USER_MOCK);
+			return deferred.promise;
+		}
+
 		// Workout
 		function getWorkouts() {
 			return $resource(BASE_URL + '/workouts').get().$promise;
@@ -46,6 +70,14 @@
 
 		function insertWorkout(workout) {
 			return $resource(BASE_URL + `/workouts/`).save(workout).$promise;
+		}
+
+		function updateWorkout(workout) {
+			return $resource(BASE_URL + `/workouts/${workout.Id}`, null, {
+			    'update': { 
+			    	method: 'PUT' 
+			    }
+			}).update(workout).$promise;
 		}
 
 		function removeWorkout(id) {
@@ -78,6 +110,19 @@
 		function getExerciseTypes() {
 			return $resource(BASE_URL + '/exercise-types').get().$promise;
 		}
+
+		function insertExerciseType(exerciseType) {
+			return $resource(BASE_URL + '/exercise-types').save(exerciseType).$promise;
+		}
+
+		function removeExerciseType(id) {
+			return $resource(BASE_URL + `/exercise-types/${id}`).remove().$promise;
+		}
+
+		function getExercises() {
+			return $resource(BASE_URL + '/exercises').get().$promise;
+		}
+
 		function insertExercise(exercise) {
 			let requestBody = angular.copy(exercise);
 			requestBody.bodyPartsEngaged = requestBody.bodyPartsEngaged.join(',');
@@ -93,14 +138,14 @@
 			requestBody.bodyPartsEngaged = requestBody.bodyPartsEngaged.join(',');
 			return $resource(BASE_URL + `/exercises/${exercise.id}`, null, {
 			    'update': { 
-			    	method:'PUT' 
+			    	method: 'PUT' 
 			    }
 			}).update(requestBody).$promise;
 		}
 
 		function getBodyParts() {
 			let deferred = $q.defer();
-			deferred.resolve(bodyPartsResponse);
+			deferred.resolve(BODY_PARTS);
 			return deferred.promise;
 		}
 	}

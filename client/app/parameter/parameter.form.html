@@ -10,18 +10,36 @@
 			<div layout-gt-xs="row">
 				<md-input-container flex>
 					<label>Name</label>
-					<input name="name" required ng-model="vm.parameter.name" autocomplete="off">
+					<input name="name" 
+						required 
+						ng-model="vm.parameter.name" 
+						autocomplete="off"
+						md-maxlength="50">
 					<div ng-messages="form.name.$error">
-	 					<div ng-message="required">This is required.</div>
+	 					<div ng-message="required">
+	 						This is required.
+	 					</div>
+	 					<div ng-message="md-maxlength">
+	 						That's too long.
+	 					</div>
      	 			</div>
 				</md-input-container>
 			</div>
 			<div layout-gt-xs="row">
 				<md-input-container flex>
 					<label>Value</label>
-					<input name="value" required ng-model="vm.parameter.value" autocomplete="off">
+					<input name="value" 
+						required 
+						ng-model="vm.parameter.value" 
+						autocomplete="off"
+						md-maxlength="128">
 					<div ng-messages="form.value.$error">
-     	 				<div ng-message="required">This is required.</div>
+     	 				<div ng-message="required">
+     	 					This is required.
+     	 				</div>
+     	 				<div ng-message="md-maxlength">
+     	 					That's too long.
+     	 				</div>
      	 			</div>
 				</md-input-container>
 			</div>

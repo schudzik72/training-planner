@@ -5,16 +5,16 @@
 		.module('trainingPlanner.workout')
 		.controller('WorkoutListController', WorkoutListController);
 
-	WorkoutListController.$inject = ['logger', '$mdDialog', 'workoutService'];
+	WorkoutListController.$inject = ['logger', '$mdDialog', 'dataService'];
 
-	function WorkoutListController(logger, $mdDialog, workoutService) {
+	function WorkoutListController(logger, $mdDialog, dataService) {
 		let vm = this;
 
 		init();
 
 		function init() {
 			vm.loaded = false;
-			workoutService.getWorkouts()
+			dataService.getWorkouts()
 				.then(response => {
 					if(response.status === 'success') {
 						logger.success('Loaded', response);
@@ -37,7 +37,7 @@
 					fullscreen: vm.customFullscreen // Only for -xs, -sm breakpoints.
 			    })
 			    .then(function(workout) {
-			    	workoutService.insertWorkout(workout)
+			    	dataService.insertWorkout(workout)
 			    		.then(response => {
 			    			if(response.status) {
 				    			workout.id = response.data.id;
@@ -54,7 +54,7 @@
 
 			vm.removeWorkout = function(index) {
 				let id = vm.workouts[index].id;
-				workoutService.removeWorkout(id)
+				dataService.removeWorkout(id)
 					.then(response => {
 						if(response.status === 'success') {
 							logger.success('Workout removed');

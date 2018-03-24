@@ -10,15 +10,22 @@
 			<div layout-gt-xs="row">
 				<md-input-container>
 					<label>Exercise Name</label>
-					<input name="name" required ng-model="vm.exercise.name" autocomplete="off">
+					<input name="name" 
+						required 
+						md-maxlength="50"
+						ng-model="vm.exercise.name" 
+						autocomplete="off">
 					<div ng-messages="form.name.$error">
      	 				<div ng-message="required">This is required.</div>
+     	 				<div ng-message="md-maxlength">That's too long.</div>
      	 			</div>
 				</md-input-container>
 
 				<md-input-container class="md-block" flex-gt-sm>
 					<label>Type</label>
-					<md-select ng-model="vm.exercise.exerciseTypeId" name="type" required>
+					<md-select name="type"
+						ng-model="vm.exercise.exerciseTypeId" 
+						required>
 						<md-option ng-repeat="exerciseType in vm.types" ng-value="exerciseType.id">
 							{{ exerciseType.type }}	
 						</md-option>
@@ -31,7 +38,9 @@
 			<div layout-gt-xs="row">
 				<md-input-container flex>
 					<label>Description</label>
-					<textarea name="description" ng-model="vm.exercise.description" md-maxlength="150"></textarea>
+					<textarea name="description" 
+						ng-model="vm.exercise.description" 
+						md-maxlength="150"></textarea>
 					<div ng-messages="form.description.$error">
 						<div ng-message="md-maxlength">
 							That's too long.
@@ -42,7 +51,10 @@
 			<div layout-gt-xs="row">
 				<md-input-container flex>
 					<label>Body parts engaged</label>
-					<md-select ng-model="vm.exercise.bodyPartsEngaged" name="bodyPartsEngaged" required multiple>
+					<md-select name="bodyPartsEngaged"
+						ng-model="vm.exercise.bodyPartsEngaged" 
+						required 
+						multiple>
 						<md-option ng-repeat="bodyPart in vm.bodyParts" ng-value="bodyPart">
 							{{ bodyPart }}	
 						</md-option>
@@ -57,7 +69,10 @@
 			<div layout-gt-xs="row">
 				<md-input-container flex>
 					<label>Link to exercise</label>
-					<input name="linkToExercise" ng-model="vm.exercise.linkToExercise" autocomplete="off" ng-pattern="/^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/">
+					<input name="linkToExercise" 
+						ng-model="vm.exercise.linkToExercise" 
+						autocomplete="off" 
+						ng-pattern="/^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/">
 					<div ng-messages="form.linkToExercise.$error">
 						<div ng-message="pattern">
 							Url is not valid.
