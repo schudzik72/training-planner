@@ -45,7 +45,7 @@
 					if(error) {
 						response.json(new JSendResponse('error', null, error));
 					} else if(row === undefined) {
-						response.json(new JSendResponse('error', null, 'Not found'));
+						response.json(new JSendResponse('fail', null, 'Not found'));
 					} else {
 						response.json(new JSendResponse('success', row));
 					}
@@ -62,6 +62,19 @@
 						response.json(new JSendResponse('error', null, error));
 					} else {
 						workout.id = id;
+						response.json(new JSendResponse('success', workout));
+					}
+				});
+		});
+	restApi.put('/workouts/:id',
+		(request, response) => {
+			let workout = request.body;
+			db.run(`UPDATE WORKOUT SET name = ?, description = ? WHERE id = ?`,
+				[workout.name, workout.description, workout.id],
+				error => {
+					if(error) {
+						response.json(new JSendResponse('error', null, error));
+					} else {
 						response.json(new JSendResponse('success', workout));
 					}
 				});
@@ -98,6 +111,8 @@
 				(error, row) => {
 					if(error) {
 						response.json(new JSendResponse('error', null, error));
+					} else if(row === undefined) {
+						response.json(new JSendResponse('fail', null, 'Not found'));
 					} else {
 						response.json(new JSendResponse('success', row));
 					}
@@ -105,16 +120,16 @@
 		});
 	restApi.post('/exercise-types',
 		(request, response) => {
-			let type = request.body.type;
+			let exerciseType = request.body;
 			db.run('INSERT INTO EXERCISE_TYPE(type) VALUES(?)',
-				[type],
+				[exerciseType.type],
 				function(error) {
 					let id = this.lastID;
 					if(error) {
 						response.json(new JSendResponse('error', null, error));
 					} else {
-						type.id = id;
-						response.json(new JSendResponse('success', type));
+						exerciseType.id = id;
+						response.json(new JSendResponse('success', exerciseType));
 					}
 				});
 		});
@@ -149,6 +164,8 @@
 				(error, row) => {
 					if(error) {
 						response.json(new JSendResponse('error', null, error));
+					} else if(row === undefined) {
+						response.json(new JSendResponse('fail', null, 'Not found'));
 					} else {
 						response.json(new JSendResponse('success', row));
 					}
