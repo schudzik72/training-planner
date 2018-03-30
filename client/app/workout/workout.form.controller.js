@@ -12,7 +12,7 @@
 
 		vm.workout = {
 			name: '',
-			type: {},
+			description: {},
 		};
 		vm.add = function(workoutForm) {
 			if(workoutForm.$valid) {

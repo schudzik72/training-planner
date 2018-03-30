@@ -28,21 +28,28 @@
 	function dataService($q, exception, logger, $resource) {
 		let service = {
 			getUser: getUser,
+
 			getWorkouts: getWorkouts,
 			getWorkout: getWorkout,
-			updateWorkout: updateWorkout,
-			getWorkoutExercises: getWorkoutExercises,
-			getWorkoutParameters: getWorkoutParameters,
 			insertWorkout: insertWorkout,
+			updateWorkout: updateWorkout,
 			removeWorkout: removeWorkout,
+
+			getWorkoutExercises: getWorkoutExercises,
+			
+			getWorkoutParameters: getWorkoutParameters,
+			
 			getExerciseTypes: getExerciseTypes,
 			insertExerciseType: insertExerciseType,
 			removeExerciseType: removeExerciseType,
+
 			getExercises: getExercises,
 			insertExercise: insertExercise,
-			removeExercise: removeExercise,
 			updateExercise: updateExercise,
+			removeExercise: removeExercise,
+			
 			getBodyParts: getBodyParts,
+			
 			insertParameter: insertParameter,
 			updateParameter: updateParameter,
 			removeParameter: removeParameter,
@@ -73,7 +80,7 @@
 		}
 
 		function updateWorkout(workout) {
-			return $resource(BASE_URL + `/workouts/${workout.Id}`, null, {
+			return $resource(BASE_URL + `/workouts/${workout.id}`, null, {
 			    'update': { 
 			    	method: 'PUT' 
 			    }
