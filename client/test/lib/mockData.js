@@ -7,7 +7,9 @@ var mockData = (function() {
         getWorkoutExercises: getWorkoutExercises,
         getWorkoutParameters: getWorkoutParameters,
         getExerciseTypes: getExerciseTypes,
+        getExerciseType: getExerciseType,
         getExercises: getExercises,
+        getExercise: getExercise,
     };
 
     function getWorkouts() {
@@ -102,6 +104,16 @@ var mockData = (function() {
         };
     }
 
+    function getExerciseType() {
+        return {
+            status: 'success',
+            data: {
+                id: 1,
+                type: 'PUSH'
+            }
+        };
+    }
+
     function getExercises() {
         return {
             status: 'success',
@@ -143,6 +155,21 @@ var mockData = (function() {
                     workoutId: 1,
                 },
             ]
+        };
+    }
+
+    function getExercise() {
+        return {
+            status: 'success',
+            data: {
+                id: 1,
+                name: 'Chest press',
+                description: 'test description',
+                exerciseTypeId: 1,
+                bodyPartsEngaged: 'CHEST,ABS,TRICEPS',
+                linkToExercise: 'http://abc.com',
+                workoutId: 1,
+            },
         };
     }
 
