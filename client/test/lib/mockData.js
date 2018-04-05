@@ -6,6 +6,7 @@ var mockData = (function() {
         getWorkout: getWorkout,
         getWorkoutExercises: getWorkoutExercises,
         getWorkoutParameters: getWorkoutParameters,
+        getParameter: getParameter,
         getExerciseTypes: getExerciseTypes,
         getExerciseType: getExerciseType,
         getExercises: getExercises,
@@ -85,6 +86,18 @@ var mockData = (function() {
                     workoutId: 1
                 }
             ]
+        };
+    }
+
+    function getParameter() {
+        return {
+            status: 'success',
+            data: {
+                id: 1,
+                name: 'Sets',
+                value: '8-12',
+                workoutId: 1
+            },
         };
     }
 
