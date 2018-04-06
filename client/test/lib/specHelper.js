@@ -27,7 +27,8 @@
         mockService: mockService,
         replaceAccentChars: replaceAccentChars,
         verifyNoOutstandingHttpRequests: verifyNoOutstandingHttpRequests,
-        wrapWithDone: wrapWithDone
+        wrapWithDone: wrapWithDone,
+        baseUrl: 'http://localhost:3000'
     };
 
     var global = (function() { return this; })();

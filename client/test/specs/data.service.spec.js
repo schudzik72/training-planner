@@ -3,8 +3,6 @@ describe('dataService', function() {
     
 	let mocks = {};
 
-    let BASE_URL = 'http://localhost:3000';
-
     beforeEach(function() {
     	mocks = {
         	workouts: mockData.getWorkouts(),
@@ -53,7 +51,7 @@ describe('dataService', function() {
     	});
 
     	it('return list of workouts', function(done) {
-            $httpBackend.whenGET(BASE_URL + '/workouts').respond(mocks.workouts);
+            $httpBackend.whenGET(bard.baseUrl + '/workouts').respond(mocks.workouts);
     		dataService.getWorkouts()
     			.then(function(response) {
     				assert.isDefined(response, 'response is defined');
@@ -72,7 +70,7 @@ describe('dataService', function() {
     	});
 
     	it('returns workout', function(done) {
-    		$httpBackend.whenGET(BASE_URL + '/workouts/1').respond(mocks.workout);
+    		$httpBackend.whenGET(bard.baseUrl + '/workouts/1').respond(mocks.workout);
     		dataService.getWorkout(1)
     			.then(function(response) {
     				assert.isDefined(response, 'response is defined');
@@ -93,7 +91,7 @@ describe('dataService', function() {
     	});
 
     	it('inserts workout', function(done) {
-    		$httpBackend.whenPOST(BASE_URL + '/workouts').respond(mocks.workout);
+    		$httpBackend.whenPOST(bard.baseUrl + '/workouts').respond(mocks.workout);
     		dataService.insertWorkout(mocks.workout)
     			.then(function(response) {
 	    			assert.isDefined(response, 'response is defined');
@@ -117,7 +115,7 @@ describe('dataService', function() {
     		let workout = mocks.workout.data;
     		workout.id = 1;
     		workout.description = 'test description';
-    		$httpBackend.whenPUT(BASE_URL + '/workouts/1').respond(mocks.workout);
+    		$httpBackend.whenPUT(bard.baseUrl + '/workouts/1').respond(mocks.workout);
     		dataService.updateWorkout(workout)
     			.then(function(response) {
 	    			assert.isDefined(response, 'response is defined');
@@ -138,7 +136,7 @@ describe('dataService', function() {
     	});
 
     	it('removes workout', function(done) {
-    		$httpBackend.whenDELETE(BASE_URL + '/workouts/1').respond({status: 'success'});
+    		$httpBackend.whenDELETE(bard.baseUrl + '/workouts/1').respond({status: 'success'});
     		dataService.removeWorkout(1)
     			.then(function(response) {
     				assert.isDefined(response, 'response is defined');
@@ -154,7 +152,7 @@ describe('dataService', function() {
     	});
 
     	it('return list of workout exercises', function(done) {
-    		$httpBackend.whenGET(BASE_URL + '/workouts/1/exercises').respond(mocks.workoutExercises);
+    		$httpBackend.whenGET(bard.baseUrl + '/workouts/1/exercises').respond(mocks.workoutExercises);
     		dataService.getWorkoutExercises(1)
     			.then(function(response) {
     				assert.isDefined(response, 'response is defined');
@@ -175,7 +173,7 @@ describe('dataService', function() {
     	});
 
     	it('return list of workout parameters', function(done) {
-    		$httpBackend.whenGET(BASE_URL + '/workouts/1/parameters').respond(mocks.workoutParameters);
+    		$httpBackend.whenGET(bard.baseUrl + '/workouts/1/parameters').respond(mocks.workoutParameters);
     		dataService.getWorkoutParameters(1)
     			.then(function(response) {
     				assert.isDefined(response, 'response is defined');
@@ -196,7 +194,7 @@ describe('dataService', function() {
     	});
 
     	it('return list of exercise types', function(done) {
-    		$httpBackend.whenGET(BASE_URL + '/exercise-types').respond(mocks.exerciseTypes);
+    		$httpBackend.whenGET(bard.baseUrl + '/exercise-types').respond(mocks.exerciseTypes);
     		dataService.getExerciseTypes()
     			.then(function(response) {
     				assert.isDefined(response, 'response is defined');
@@ -217,7 +215,7 @@ describe('dataService', function() {
     	});
 
     	it('inserts exercise types', function(done) {
-    		$httpBackend.whenPOST(BASE_URL + '/exercise-types').respond(mocks.exerciseType);
+    		$httpBackend.whenPOST(bard.baseUrl + '/exercise-types').respond(mocks.exerciseType);
     		let exerciseType = {
     			type: 'PUSH'
     		};
@@ -240,7 +238,7 @@ describe('dataService', function() {
     	});
 
     	it('removes exercise types', function(done) {
-    		$httpBackend.whenDELETE(BASE_URL + '/exercise-types/1').respond({status: 'success'});
+    		$httpBackend.whenDELETE(bard.baseUrl + '/exercise-types/1').respond({status: 'success'});
     		dataService.removeExerciseType(1)
     			.then(function(response) {
     				assert.isDefined(response, 'response is defined');
@@ -256,7 +254,7 @@ describe('dataService', function() {
     	});
 
     	it('return list of exercises', function(done) {
-    		$httpBackend.whenGET(BASE_URL + '/exercises').respond(mocks.exercises);
+    		$httpBackend.whenGET(bard.baseUrl + '/exercises').respond(mocks.exercises);
     		dataService.getExercises()
     			.then(function(response) {
     				assert.isDefined(response, 'response is defined');
@@ -283,7 +281,7 @@ describe('dataService', function() {
                 linkToExercise: 'http://abc.com',
                 workoutId: 1,
     		};
-    		$httpBackend.whenPOST(BASE_URL + '/exercises').respond(mocks.exercise);
+    		$httpBackend.whenPOST(bard.baseUrl + '/exercises').respond(mocks.exercise);
     		dataService.insertExercise(exercise)
     			.then(function(response) {
     				assert.isDefined(response, 'response is defined');
@@ -312,7 +310,7 @@ describe('dataService', function() {
     		exercise.data.bodyPartsEngaged = exercise.data.bodyPartsEngaged.split(',');
     		exercise.data.name = 'test';
 
-    		$httpBackend.whenPUT(BASE_URL + '/exercises/' + exercise.data.id).respond(exercise);
+    		$httpBackend.whenPUT(bard.baseUrl + '/exercises/' + exercise.data.id).respond(exercise);
     		dataService.updateExercise(exercise.data)
     			.then(function(response) {
     				assert.isDefined(response, 'response is defined');
@@ -332,7 +330,7 @@ describe('dataService', function() {
     	});
 
     	it('removes exercise', function(done) {
-    		$httpBackend.whenDELETE(BASE_URL + '/exercises/1').respond({status: 'success'});
+    		$httpBackend.whenDELETE(bard.baseUrl + '/exercises/1').respond({status: 'success'});
     		dataService.removeExercise(1)
     			.then(function(response) {
     				assert.isDefined(response, 'response is defined');
@@ -370,7 +368,7 @@ describe('dataService', function() {
     			value: '8-12',
     			workoutId: 1
     		};
-    		$httpBackend.whenPOST(BASE_URL + '/workouts/1/parameters').respond(mocks.parameter);
+    		$httpBackend.whenPOST(bard.baseUrl + '/workouts/1/parameters').respond(mocks.parameter);
     		dataService.insertParameter(parameter.workoutId, parameter)
     			.then(function(response) {
     				assert.isDefined(response, 'response is defined');
@@ -394,7 +392,7 @@ describe('dataService', function() {
     	it('updates parameter', function(done) {
     		let parameter = mocks.parameter;
     		parameter.data.name = 'Repetitions';
-    		$httpBackend.whenPUT(BASE_URL + '/parameters/' + parameter.data.id).respond(parameter);
+    		$httpBackend.whenPUT(bard.baseUrl + '/parameters/' + parameter.data.id).respond(parameter);
     		dataService.updateParameter(parameter.data)
     			.then(function(response) {
     				assert.isDefined(response, 'response is defined');
@@ -414,7 +412,7 @@ describe('dataService', function() {
     	});
 
     	it('removes parameter', function(done) {
-    		$httpBackend.whenDELETE(BASE_URL + '/parameters/1').respond({status:'success'});
+    		$httpBackend.whenDELETE(bard.baseUrl + '/parameters/1').respond({status:'success'});
     		dataService.removeParameter(1)
     			.then(function(response) {
     				assert.isDefined(response, 'response is defined');

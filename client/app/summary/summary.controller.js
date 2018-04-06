@@ -11,17 +11,13 @@
 		
 		let vm = this;
 
-		init();
-
-		function init() {
-			vm.loaded = false;
-			dataService.getUser()
-				.then(response => {
-					vm.user = response;
-					vm.loaded = true;
-					logger.success('Loaded', response);
-				});
-		}
+		vm.loaded = false;
+		dataService.getUser()
+			.then(response => {
+				vm.user = response;
+				vm.loaded = true;
+				logger.success('Loaded', response);
+			});
 	}
 
 })();

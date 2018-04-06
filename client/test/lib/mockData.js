@@ -2,6 +2,7 @@
 /*jshint -W079 */
 var mockData = (function() {
     return {
+        user: getUser,
         getWorkouts: getWorkouts,
         getWorkout: getWorkout,
         getWorkoutExercises: getWorkoutExercises,
@@ -12,6 +13,19 @@ var mockData = (function() {
         getExercises: getExercises,
         getExercise: getExercise,
     };
+
+    function getUser() {
+        return {
+            firstName: 'John',
+            lastName: 'Doe',
+            getName: function() {
+                return this.firstName + ' ' + this.lastName
+            },
+            bodyType: 'endomorph',
+            height: '1.81m',
+            weight: '70kg',
+        };
+    }
 
     function getWorkouts() {
         return {
