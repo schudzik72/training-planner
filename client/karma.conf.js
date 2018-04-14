@@ -35,7 +35,7 @@ module.exports = function(config) {
       './app/**/*.module.js',
       './app/**/*.js',
 
-      './test/lib/specHelper.js',
+      './test/lib/bard.js',
       './test/lib/mockData.js',
 
       './test/specs/*.spec.js'
@@ -60,7 +60,7 @@ module.exports = function(config) {
     reporters: ['progress', 'coverage'],
 
     coverageReporter: {
-      type : 'text-summary',
+      type : 'html',
       dir : './test/coverage/'
     },
 
