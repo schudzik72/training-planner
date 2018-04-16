@@ -347,7 +347,7 @@
     }
 
     function fakeRouteHelperProvider($provide) {
-        $provide.provider('routerHelper', function() {
+        $provide.provider('routerhelper', function() {
             /* jshint validthis:true */
             this.config = {
                 $routeProvider: undefined,
