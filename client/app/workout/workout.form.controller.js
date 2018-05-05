@@ -12,8 +12,9 @@
 
 		vm.workout = {
 			name: '',
-			description: {},
+			description: '',
 		};
+
 		vm.add = function(workoutForm) {
 			if(workoutForm.$valid) {
 				$mdDialog.hide(vm.workout);
