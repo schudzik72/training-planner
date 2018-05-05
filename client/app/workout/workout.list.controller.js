@@ -10,7 +10,9 @@
 	function WorkoutListController(logger, $mdDialog, dataService) {
 		let vm = this;
 
+		vm.workouts = [];
 		vm.loaded = false;
+
 		dataService.getWorkouts()
 			.then(response => {
 				if(response.status === 'success') {
@@ -35,7 +37,7 @@
 		    .then(function(workout) {
 		    	dataService.insertWorkout(workout)
 		    		.then(response => {
-		    			if(response.status) {
+		    			if(response.status === 'success') {
 			    			workout.id = response.data.id;
 			    			vm.workouts.push(workout);
 							logger.success('New workout added', workout);
