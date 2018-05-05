@@ -1,15 +1,12 @@
 'use strict';
 describe('trainingPlanner.summary', function() {
+
 	let controller;
-	let mocks = {};
 
 	let getUserSpy;
 	let loggerSuccessSpy;
 
 	beforeEach(function() {
-		mocks = {
-			user: mockData.getUser
-		};
 		
 		bard.appModule('trainingPlanner.summary');
 		bard.inject('$controller', '$rootScope', '$q', 'logger', 'dataService');
