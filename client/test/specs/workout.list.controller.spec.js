@@ -2,7 +2,6 @@
 describe('trainingPlanner.workout', function() {
 
 	let controller;
-	let mocks = {};
 
 	let deferred;
 
@@ -16,7 +15,7 @@ describe('trainingPlanner.workout', function() {
 	beforeEach(function() {
 
 		bard.appModule('trainingPlanner.workout');
-		bard.inject('$httpBackend', '$controller', '$rootScope', '$q', 'logger', '$mdDialog', 'dataService');
+		bard.inject('$controller', '$rootScope', '$q', 'logger', '$mdDialog', 'dataService');
 	
 	}); 
 
