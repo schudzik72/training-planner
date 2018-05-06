@@ -26,15 +26,19 @@ describe('trainingPlanner.workout', function() {
 	describe('WorkoutFormController', function() {
 		
 		it('should be defined', function() {
+
 			expect(controller).to.not.be.undefined;
 		});
 
 		it('should have workout object defined', function() {
+
 			expect(controller.workout).to.not.be.undefined;
 		});
 
 		describe('add', function() {
+
 			it('should verify form and call $mdDialog.hide', function() {
+
 				controller.add({
 					$valid: true
 				});
@@ -42,11 +46,13 @@ describe('trainingPlanner.workout', function() {
 			});
 
 			it('should verify form is invalid and call logger error', function() {
+				
 				controller.add({
 					$valid: false
 				});
 				expect(loggerErrorSpy.called).to.be.true;
 			});
+
 		});
 
 	});
