@@ -80,7 +80,6 @@
 					vm.chart.labels.push(entry[0]);
 					vm.chart.data[0].push(entry[1]);
 				}
-				console.log(vm.chart);
 			}
 
 			vm.showAddExerciseForm = function(event) {
@@ -171,9 +170,13 @@
 				let id = vm.exercises[index].id;
 				dataService.removeExercise(id)
 					.then(response => {
-						vm.exercises.splice(index, 1);
-						calculateChartValues();
-						logger.success('Removed exercise', response);
+						if(response.status === 'success') {
+							vm.exercises.splice(index, 1);
+							calculateChartValues();
+							logger.success('Removed exercise', response);
+						} else {
+							logger.error(response.message);
+						}
 					}).catch(error => logger.error('Error occurred', error));
 			};
 
@@ -193,8 +196,12 @@
 				    	let parameter = data.parameter;
 				    	dataService.insertParameter(vm.workout.id, parameter)
 				    		.then(response => {
-				    			vm.parameters.push(parameter);
-						    	logger.success('New parameter added', response);
+			    				if(response.status === 'success') {
+					    			vm.parameters.push(parameter);
+							    	logger.success('New parameter added', response);
+							    } else {
+							    	logger.error(response.message, null);
+							    }
 				    		}).catch(error => logger.error('Error occurred', error));
 				    }, () => {
 				    	logger.info('Cancelled', null);
@@ -221,14 +228,22 @@
 				    	if(data.toDelete) {
 					    	dataService.removeParameter(parameter.id)
 					    		.then(response => {
-					    			vm.parameters.splice(index, 1);
-					    			logger.success('Parameter removed', response);
+					    			if(response.status === 'success') {
+						    			vm.parameters.splice(index, 1);
+						    			logger.success('Parameter removed', response);
+						    		} else {
+						    			logger.error(response.message, null);
+						    		}
 					    		}).catch(error => logger.error('Error occurred', error));
 					    } else {
 					    	dataService.updateParameter(parameter)
 					    		.then(response => {
-					    			vm.parameters[index] = parameter;
-							    	logger.success('Parameter updated', response);
+					    			if(response.status === 'success') {
+						    			vm.parameters[index] = parameter;
+								    	logger.success('Parameter updated', response);
+								    } else {
+						    			logger.error(response.message, null);
+								    }
 					    		}).catch(error => logger.error('Error occurred', error));
 					    }
 				    }, () => {
