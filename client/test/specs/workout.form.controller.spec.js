@@ -2,7 +2,6 @@
 describe('trainingPlanner.workout', function() {
 
 	let controller;
-	let mocks = {};
 
 	let loggerErrorSpy;
 	let mdDialogHideSpy;
