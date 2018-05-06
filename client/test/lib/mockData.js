@@ -12,6 +12,7 @@ var mockData = (function() {
         getExerciseType: getExerciseType,
         getExercises: getExercises,
         getExercise: getExercise,
+        getStates: getStates,
     };
 
     function getUser() {
@@ -198,6 +199,25 @@ var mockData = (function() {
                 workoutId: 1,
             },
         };
+    }
+
+    function getStates() {
+        return [
+            {
+                state: 'summary',
+                config: {
+                    url: '/summary',
+                    templateUrl: 'app/summary/summary.html',
+                    controller: 'SummaryController',
+                    controllerAs: 'vm',
+                    title: 'Summary',
+                    settings: {
+                        nav: 1,
+                        content: 'Summary'
+                    }
+                }
+            },
+        ];
     }
 
 })();
