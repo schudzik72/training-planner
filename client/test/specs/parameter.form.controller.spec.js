@@ -2,7 +2,6 @@
 describe('trainingPlanner.parameter', function() {
 
 	let controller;
-	let mocks = {};
 
 	let loggerErrorSpy;
 	let mdDialogHideStub;
