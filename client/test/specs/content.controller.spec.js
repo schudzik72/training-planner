@@ -17,8 +17,7 @@ describe('trainingPlanner.layout', function() {
 			});
 		});
 		bard.inject('$controller', '$rootScope', '$mdSidenav');
-	
-	}); 
+	});
 
 	beforeEach(function() {
 
