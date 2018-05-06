@@ -27,7 +27,7 @@
 			dataService.getExerciseTypes()
 				.then(response => {
 					if(response.status === 'success') {
-						vm.types = response.data
+						vm.types = response.data;
 					} else {
 						logger.error(response.message, null);
 					}
