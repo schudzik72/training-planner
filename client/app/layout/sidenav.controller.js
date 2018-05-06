@@ -25,6 +25,8 @@
 		}
 
 		function isCurrent(route) {
+			console.log(route);
+			console.log($state);
 			if(!route.title || !$state.current || !$state.current.title) {
 				return '';
 			}
