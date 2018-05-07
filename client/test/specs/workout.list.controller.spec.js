@@ -3,12 +3,9 @@ describe('trainingPlanner.workout', function() {
 
 	let controller;
 
-	let deferred;
-
 	let getWorkoutsStub;
 	let insertWorkoutStub;
 	let removeWorkoutStub;
-	let loggerInfoSpy;
 	let loggerSuccessSpy;
 	let mdDialogShowStub;
 
@@ -21,17 +18,11 @@ describe('trainingPlanner.workout', function() {
 
 	beforeEach(function() {
 
-		getWorkoutsStub = sinon.stub(dataService, 'getWorkouts');
-		mdDialogShowStub = sinon.stub($mdDialog, 'show');
-
-		deferred = $q.defer();
-		
-		getWorkoutsStub.returns(deferred.promise);
-		mdDialogShowStub.returns(deferred.promise);
-
-
-		loggerInfoSpy = sinon.spy(logger, 'info');
 		loggerSuccessSpy = sinon.spy(logger, 'success');
+
+		getWorkoutsStub = sinon.stub(dataService, 'getWorkouts');
+		
+		getWorkoutsStub.resolves(mockData.getWorkouts());
 
 		controller = $controller('WorkoutListController');
 		$rootScope.$apply();
@@ -46,33 +37,29 @@ describe('trainingPlanner.workout', function() {
 
 		describe('after init', function() {
 
-			it('should call logger success', function() {
+			it('should call logger success', function(done) {
 
-				deferred.resolve(mockData.getWorkouts());
-				$rootScope.$apply();
-				expect(loggerSuccessSpy.called).to.be.true;
+				setTimeout(function() {
+					expect(loggerSuccessSpy.called).to.be.true;
+					done();
+				}, 0);
 			});
 
-			it('should have 2 workouts', function() {
+			it('should have 2 workouts', function(done) {
 
-				deferred.resolve(mockData.getWorkouts());
-				$rootScope.$apply();
-				expect(controller.workouts).to.have.lengthOf(2);
+				setTimeout(function() {
+					expect(controller.workouts).to.have.lengthOf(2);
+					done();
+				}, 0);
 			});
 
-			it('should be loaded', function() {
+			it('should be loaded', function(done) {
 
-				deferred.resolve(mockData.getWorkouts());
-				$rootScope.$apply();
-				expect(controller.loaded).to.be.true;
+				setTimeout(function() {
+					expect(controller.loaded).to.be.true;
+					done();
+				}, 0);
 			});
-
-			it('should\'t load', function() {
-
-				deferred.reject();
-				$rootScope.$apply();
-				expect(controller.loaded).to.be.false;
-			});	
 
 		});
 
@@ -81,8 +68,16 @@ describe('trainingPlanner.workout', function() {
 			beforeEach(function(done) {
 
 				setTimeout(function() {
+					mdDialogShowStub = sinon.stub($mdDialog, 'show');
 					insertWorkoutStub = sinon.stub(dataService, 'insertWorkout');
-					insertWorkoutStub.returns(deferred.promise);
+					
+					mdDialogShowStub.resolves(mockData.getWorkout().data);
+					insertWorkoutStub.resolves({
+						status: 'success',
+						data: {
+							id: 1
+						}
+					});
 
 					$rootScope.$apply();
 					done();
@@ -94,35 +89,23 @@ describe('trainingPlanner.workout', function() {
 				expect(controller.showAddWorkoutForm).to.not.be.undefined;
 			});
 
-			it('should call $mdDailog.show', function() {
-
-				deferred.resolve(mockData.getWorkout());
-				$rootScope.$apply();
+			it('should call $mdDailog.show', function(done) {
 
 				controller.showAddWorkoutForm();
-				expect(mdDialogShowStub.firstCall.args[0].controller).to.be.equal('WorkoutFormController');
-				expect(mdDialogShowStub.firstCall.args[0].controllerAs).to.be.equal('vm');
-				expect(mdDialogShowStub.firstCall.args[0].bindToController).to.be.true;
-				expect(mdDialogShowStub.firstCall.args[0].templateUrl).to.be.equal('app/workout/workout.form.html');
-				expect(mdDialogShowStub.firstCall.args[0].clickOutsideToClose).to.be.true;
+				setTimeout(function() {
+					expect(mdDialogShowStub.firstCall.args[0].controller).to.be.equal('WorkoutFormController');
+					expect(mdDialogShowStub.firstCall.args[0].templateUrl).to.be.equal('app/workout/workout.form.html');
+					done();
+				}, 0);
 			});
 
 			it('should return and try to insert workout', function(done) {
 
-				mdDialogShowStub.resolves(mockData.getWorkout());
-				insertWorkoutStub.resolves({
-					data: {
-						id: 1
-					},
-					status: 'success'
-				});
-				$rootScope.$apply();
-				
 				controller.showAddWorkoutForm();
-				setTimeout(() => {
+				setTimeout(function() {
 					expect(insertWorkoutStub.firstCall).to.not.be.undefined;
 					expect(loggerSuccessSpy.called).to.be.true;
-					expect(controller.workouts).to.have.lengthOf(1);
+					expect(controller.workouts).to.have.lengthOf(3);
 					done();
 				}, 0);
 
@@ -136,7 +119,10 @@ describe('trainingPlanner.workout', function() {
 				
 				setTimeout(function() {
 					removeWorkoutStub = sinon.stub(dataService, 'removeWorkout');
-					removeWorkoutStub.returns(deferred.promise);
+					
+					removeWorkoutStub.resolves({
+						status: 'success'
+					});
 
 					$rootScope.$apply();
 					done();
@@ -150,24 +136,11 @@ describe('trainingPlanner.workout', function() {
 
 			it('should remove workout', function(done) {
 
-				mdDialogShowStub.resolves(mockData.getWorkout());
-				insertWorkoutStub.resolves({
-					data: {
-						id: 1
-					},
-					status: 'success'
-				});
-				removeWorkoutStub.resolves({
-					status: 'success'
-				});
-				$rootScope.$apply();
-				controller.workouts.push(mockData.getWorkout().data);
-
 				controller.removeWorkout(0);
 				setTimeout(() => {
 					expect(removeWorkoutStub.firstCall).to.not.be.undefined;
 					expect(loggerSuccessSpy.called).to.be.true;
-					expect(controller.workouts).to.have.lengthOf(0);
+					expect(controller.workouts).to.have.lengthOf(1);
 					done();
 				});
 
