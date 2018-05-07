@@ -37,6 +37,7 @@ describe('trainingPlanner.workout', function() {
 		describe('add', function() {
 
 			it('should be defined', function() {
+				
 				expect(controller.add).to.not.be.undefined;
 			});
 
