@@ -1,0 +1,135 @@
+<span ng-show="!vm.loaded" 
+	layout-fill layout="row" 
+	layout-align="center center">
+	<md-progress-circular md-diameter="96"></md-progress-circular flex>
+</span>
+<span class="workout-detail-container" ng-show="vm.loaded">
+	<md-button class="md-fab md-fab-top-right" aria-label="Return" ui-sref="workout.list">
+		<md-icon md-svg-icon="img/icons/arrow-left.svg"></md-icon>
+	</md-button>
+	<header class="animated fadeIn" 
+		ng-mouseover="showWorkoutNameEditButton = true" 
+		ng-mouseleave="showWorkoutNameEditButton = false">	
+		<h1 class="md-display-3">
+			<span ng-show="!vm.editWorkoutName">{{ vm.workout.name }}</span>
+			<form name="workoutNameForm"
+				ng-if="vm.editWorkoutName"
+				layout="row">
+				<md-input-container>
+					<input name="name"
+						ng-model="vm.updatedWorkout.name"
+						required
+						md-maxlength="50">
+					<div ng-messages="workoutNameForm.name.$error">
+	 					<div ng-message="required">
+	 						This is required.
+	 					</div>
+	 					<div ng-message="md-maxlength">
+	 						That's too long.
+	 					</div>
+     	 			</div>
+				</md-input-container>
+				<div layout-gt-xs="row" layout-align="end center">
+					<md-button ng-click="vm.updateWorkout()">Save</md-button>
+					<md-button ng-click="vm.cancelWorkoutUpdate()">Cancel</md-button>
+				</div>
+			</form>
+			<md-button 
+				class="workout-name-inline-edit-button" 
+				ng-show="showWorkoutNameEditButton && !vm.editWorkoutName" 
+				ng-click="vm.editWorkoutName = true">
+					<md-icon md-svg-src="img/icons/ic-edit-24px.svg"></md-icon>
+			</md-button>
+		</h1>
+	</header>
+	<md-content layout="column">
+		<header>
+			<h5 class="md-title">Parameters</h5>
+		</header>
+		<div id="workout-type-parameters-container" class="animated zoomIn" layout="row" layout-align="center center" layout-wrap>
+			<md-button class="workout-type-parameters" layout="column" ng-repeat="parameter in vm.parameters" ng-click="vm.showEditParameterForm($event, $index)">
+				<span class="md-caption parameter-name">{{ parameter.name }}</span>
+				<span class="md-caption parameter-value">{{ parameter.value }}</span>
+			</md-button>
+			<md-button id="add-parameter-button" ng-click="vm.showParameterForm($event)">
+				<md-icon md-svg-icon="img/icons/plus-circle-outline.svg"></md-icon>
+			</md-button>
+		</div>
+		<header>
+			<h5 class="md-title">Description</h5>
+		</header>
+		<section ng-mouseover="showWorkoutDescriptionEditButton = true" 
+				 ng-mouseleave="showWorkoutDescriptionEditButton = false">
+			<p class="md-body-1">
+				<span ng-show="!vm.editWorkoutDescription">
+					{{ vm.workout.description }}
+					<md-button class="workout-description-inline-edit-button" 
+						ng-show="showWorkoutDescriptionEditButton" 
+						ng-click="vm.editWorkoutDescription = true">
+							<md-icon md-svg-src="img/icons/ic-edit-24px.svg"></md-icon>
+					</md-button>
+				</span>
+				<form name="workoutDescriptionForm"
+					ng-if="vm.editWorkoutDescription"
+					layout="row">
+					<md-input-container flex>
+						<textarea name="description" 
+								  ng-model="vm.updatedWorkout.description" 
+								  md-maxlength="128"></textarea>
+						<div ng-messages="workoutDescriptionForm.description.$error">
+		 					<div ng-message="required">
+		 						This is required.
+		 					</div>
+		 					<div ng-message="md-maxlength">
+		 						That's too long.
+		 					</div>
+	     	 			</div>
+					</md-input-container>
+					<div layout-gt-xs="row" layout-align="end center">
+						<md-button ng-click="vm.updateWorkout()">Save</md-button>
+						<md-button ng-click="vm.cancelWorkoutUpdate()">Cancel</md-button>
+					</div>
+				</form>
+			</p>
+		</section>
+		
+		<canvas id="radar" 
+			class="chart chart-radar"
+			chart-data="vm.chart.data" 
+			chart-labels="vm.chart.labels"
+			ng-show="vm.chart.labels.length > 2">
+		</canvas> 
+
+		<md-content class="exercise-list animated slideInDown">
+			<md-list flex>
+				<md-subheader class="md-no-sticky">Exercises</md-subheader>
+				<md-list-item class="md-3-line" ng-repeat="exercise in vm.exercises" ng-click="exercise.showOptions = !exercise.showOptions">
+					<div class="md-list-item-text" layout="column" ng-show="!exercise.showOptions">
+						<h3>{{ exercise.name }}</h3>
+						<h4>{{ exercise.description }}</h4>
+						<p>Engaged Body Parts: {{ exercise.bodyPartsEngaged.toString() }}</p>
+					</div>
+					<div class="md-list-item-text" layout="row" layout-align="center center" ng-show="exercise.showOptions">
+						<md-button ng-if="exercise.linkToExercise" ng-href="{{exercise.linkToExercise}}" target="_blank">
+							<md-icon md-svg-icon="img/icons/file-document-box.svg"></md-icon>
+						</md-button>
+						<md-button ng-click="vm.showEditExerciseForm($event, $index)">
+							<md-icon md-svg-icon="img/icons/pencil.svg"></md-icon>
+						</md-button>
+						<md-button ng-click="vm.removeExercise($index)">
+							<md-icon md-svg-icon="img/icons/delete.svg"></md-icon>
+						</md-button>
+					</div>
+				</md-list-item>
+				<md-list-item class="md-2-line" ng-click="vm.showAddExerciseForm($event);">
+					<div class="md-list-item-text" layout="column" layout-align="center center">
+						<p class="md-caption">Add new exercise</p>
+						<md-icon md-svg-icon="img/icons/plus-circle-outline.svg"></md-icon>
+					</div>
+				</md-list-item>
+				<md-divider ng-if="$index != $last"></md-divider>
+			</md-list>
+		</md-content>
+		
+	</md-content>
+</span>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html ng-app="trainingPlanner">
+<head>
+	<style>
+	
+		.ng-hide {
+			display: none !important;
+		}
+
+	</style>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title ng-bind="title">
+		Training Planner
+	</title>
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+	<base href="/">
+
+	<link rel="stylesheet" href="node_modules/angular-material/angular-material.css">
+	<link rel="stylesheet" href="node_modules/toastr/build/toastr.css">
+	<link rel="stylesheet" href="node_modules/animate.css/animate.css">
+
+	<link rel="stylesheet" href="dist/css/app.css">
+
+
+</head>
+<body ng-cloak layout="column">
+
+<shell></shell>
+
+<!-- Libraries -->
+<script src="node_modules/angular/angular.js"></script>
+<script src="node_modules/angular-resource/angular-resource.js"></script>
+<script src="node_modules/angular-animate/angular-animate.js"></script>
+<script src="node_modules/angular-aria/angular-aria.js"></script>
+<script src="node_modules/angular-messages/angular-messages.js"></script>
+<script src="node_modules/angular-material/angular-material.js"></script>
+<script src="node_modules/@uirouter/angularjs/release/angular-ui-router.js"></script>
+<script src="node_modules/jquery/dist/jquery.js"></script>
+<script src="node_modules/toastr/toastr.js"></script>
+<script src="node_modules/chart.js/dist/Chart.min.js"></script>
+<script src="node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
+<!-- Modules -->
+<script src="app/app.module.js"></script>
+<script src="app/core/core.module.js"></script>
+<script src="app/blocks/logger/logger.module.js"></script>
+<script src="app/blocks/exception/exception.module.js"></script>
+<script src="app/blocks/router/router.module.js"></script>
+<script src="app/layout/layout.module.js"></script>
+<script src="app/summary/summary.module.js"></script>
+<script src="app/workout/workout.module.js"></script>
+<!-- Core module -->
+<script src="app/core/config.js"></script>
+<script src="app/core/constants.js"></script>
+<script src="app/core/data.service.js"></script>
+<!-- Blocks module -->
+<script src="app/blocks/logger/logger.js"></script>
+<script src="app/blocks/exception/exception.js"></script>
+<script src="app/blocks/exception/exception-handler.provider.js"></script>
+<script src="app/blocks/router/router-helper.provider.js"></script>
+<!-- Layout module -->
+<script src="app/layout/shell.component.js"></script>
+<script src="app/layout/shell.controller.js"></script>
+<script src="app/layout/sidenav.component.js"></script>
+<script src="app/layout/sidenav.controller.js"></script>
+<script src="app/layout/content.component.js"></script>
+<script src="app/layout/content.controller.js"></script>
+<!-- Summary module -->
+<script src="app/summary/summary.controller.js"></script>
+<script src="app/summary/summary.route.js"></script>
+<!-- Exercise module -->
+<script src="app/exercise/exercise.module.js"></script>
+<script src="app/exercise/exercise.form.controller.js"></script>
+<script src="app/exercise/exercise.type.form.controller.js"></script>
+<script src="app/exercise/exercise.type.list.controller.js"></script>
+<script src="app/exercise/exercise.type.route.js"></script>
+<!-- Parameter module -->
+<script src="app/parameter/parameter.module.js"></script>
+<script src="app/parameter/parameter.form.controller.js"></script>
+<!-- Workout module -->
+<script src="app/workout/workout.route.js"></script>
+<script src="app/workout/workout.list.controller.js"></script>
+<script src="app/workout/workout.form.controller.js"></script>
+<script src="app/workout/workout.detail.controller.js"></script>
+
+</body>
+</html>

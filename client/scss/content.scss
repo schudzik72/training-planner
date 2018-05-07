@@ -1,0 +1,32 @@
+@import 'mixins';
+
+#sidenav-toggle-button {
+	md-icon.fa.fa-bars {
+		font-size: 2em;
+	}
+}
+
+#content {
+	margin-left: 5px;
+	padding: 5px 0 0 40px;
+	overflow: hidden;
+	height: 97vh;
+	overflow-y: scroll;
+
+	[ui-view] {
+		width: 100%;
+		height: 100%;
+		@include transition(all, .1s, ease-in-out);
+		&.ng-enter {
+			@include animation-name(zoomInLeft);
+		}
+
+		&.ng-leave {
+			@include animation-name(zoomOutRight);
+		}
+	}
+}
+
+md-list {
+	margin-right: 40px;
+}
